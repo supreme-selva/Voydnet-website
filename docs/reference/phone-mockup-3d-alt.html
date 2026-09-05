@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Android Phone Mockup — Pure CSS</title>
+<style>
+
+  /* ======================================================================
+     DEVICE DIMENSIONS
+     Change these four variables to resize the whole phone — every part of
+     the 3D shell (front, back, left/right spine, top/bottom edge) reads
+     from these, so the geometry stays correct at any size.
+     ====================================================================== */
+  :root{
+    --phone-w: 300px;   /* screen-facing width of the phone   */
+    --phone-h: 620px;   /* screen-facing height of the phone  */
+    --phone-d: 22px;    /* physical thickness of the phone    */
+    --radius:  38px;    /* outer corner radius                */
+    --bezel:   7px;     /* black bezel thickness around glass */
+
+    --metal-light: #e9eaec;
+    --metal-mid:   #b9bcc2;
+    --metal-dark:  #74767c;
+    --chassis-dark:#0d0d0e;
+    --chassis-mid: #232326;
+    --chassis-hi:  #38383c;
+  }
+
+  @media (max-width: 480px){
+    /* Scale the whole mockup down on small screens, keeping proportions */
+    :root{
+      --phone-w: 220px;
+      --phone-h: 455px;
+      --phone-d: 16px;
+      --radius:  28px;
+      --bezel:   5px;
+    }
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    height: 100%;
+    margin: 0;
+    background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #eef0f3 70%, #e4e6ea 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* ======================================================================
+     STAGE — sets up the 3D viewing camera (the CSS `perspective`).
+     Everything inside .scene is rendered as if viewed through this lens.
+     ====================================================================== */
+  .stage{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1700px;           /* distance of the virtual camera      */
+    perspective-origin: 50% 40%;
+    overflow: hidden;
+  }
+
+  /* Soft contact shadow the phone "floats" above, anchoring it visually */
+  .ground-shadow{
+    position: absolute;
+    width: calc(var(--phone-w) * 0.85);
+    height: calc(var(--phone-h) * 0.14);
+    left: 50%;
+    top: 50%;
+    transform:
+      translate(-46%, calc(var(--phone-h) * 0.46))
+      rotate(-2deg);
+    background: radial-gradient(ellipse at center,
+                  rgba(20,20,25,0.38) 0%,
+                  rgba(20,20,25,0.18) 45%,
+                  rgba(20,20,25,0) 72%);
+    filter: blur(7px);
+    z-index: 0;
+  }
+
+  /* ======================================================================
+     SCENE — the element that actually gets tilted in 3D.
+     rotateY = turns the phone so its LEFT spine faces the camera
+     rotateX = tips the top back / bottom forward, revealing the bottom edge
+     rotateZ = a tiny extra twist so it doesn't look perfectly mechanical
+     ====================================================================== */
+  .scene{
+    position: relative;
+    width: var(--phone-w);
+    height: var(--phone-h);
+    transform-style: preserve-3d;
+    transform: rotateX(13deg) rotateY(27deg) rotateZ(-2deg);
+    z-index: 1;
+  }
+
+  /* The phone itself — just a positioning context for the 6 cube faces */
+  .phone{
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+
+  /* Shared base for every face of the "cube" that makes up the chassis */
+  .face{
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  /* ---------------------------------------------------------------------
+     FRONT FACE — the glass. Pushed forward by half the phone's thickness.
+     --------------------------------------------------------------------- */
+  .face-front{
+    width: var(--phone-w);
+    height: var(--phone-h);
+    left: 0; top: 0;
+    transform: translateZ(calc(var(--phone-d) / 2));
+    border-radius: var(--radius);
+    background: linear-gradient(150deg, var(--chassis-hi), var(--chassis-mid) 55%, var(--chassis-dark));
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.08),
+      0 30px 60px -20px rgba(0,0,0,0.45);
+  }
+
+  /* Black bezel ring between the chassis edge and the actual display */
+  .bezel{
+    position: absolute;
+    inset: var(--bezel);
+    border-radius: calc(var(--radius) - var(--bezel));
+    background: #050505;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+    overflow: hidden;
+  }
+
+  /* ---------------------------------------------------------------------
+     THE EMBED SCREEN
+     This is the flat, rectangular "viewport" for custom UI. It sits flush
+     inside the bezel, clips overflow, and is a normal 2D DOM element from
+     here on — anything you put inside it behaves like a regular webpage.
+     --------------------------------------------------------------------- */
+  #ux-embed-container{
+    position: absolute;
+    inset: 1px;                 /* thin sliver of bezel showing through */
+    border-radius: calc(var(--radius) - var(--bezel) - 1px);
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  /* --- Demo placeholder content — DELETE this and put your real UI in
+         #ux-embed-container instead. Nothing outside this comment block
+         needs to change to swap in your own app. --- */
+  .demo-ui{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #b9bcc2;
+    font-size: 13px;
+    letter-spacing: .2px;
+    text-align: center;
+    padding: 0 30px;
+  }
+  .demo-ui strong{ color:#8a8d93; font-size:14px; font-weight:600; }
+  /* --- end demo placeholder --- */
+
+  /* Diagonal glass sheen, drawn ABOVE the embed content so it always
+     reads as "glass" no matter what UI is loaded underneath */
+  .glass-reflection{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg,
+                  rgba(255,255,255,0.30) 0%,
+                  rgba(255,255,255,0.05) 22%,
+                  rgba(255,255,255,0) 45%,
+                  rgba(255,255,255,0) 78%,
+                  rgba(255,255,255,0.06) 100%);
+    mix-blend-mode: screen;
+    z-index: 6;
+  }
+
+  /* Hole-punch selfie camera — drawn on top of everything in the bezel,
+     including the embed container, since it is a physical cutout */
+  .camera-hole{
+    position: absolute;
+    left: 25px;
+    top: 21px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 32%, #4b4f56 0%, #0a0b0d 55%, #000 100%);
+    box-shadow:
+      0 0 0 3px rgba(0,0,0,0.35),      /* faint ring bezel eats into screen */
+      inset 0 0 2px rgba(255,255,255,0.25);
+    z-index: 7;
+  }
+  @media (max-width: 480px){
+    .camera-hole{ left: 18px; top: 15px; width: 9px; height: 9px; }
+  }
+
+  /* ---------------------------------------------------------------------
+     BACK FACE — mirrors the front, pushed backward and flipped 180°.
+     --------------------------------------------------------------------- */
+  .face-back{
+    width: var(--phone-w);
+    height: var(--phone-h);
+    left: 0; top: 0;
+    transform: rotateY(180deg) translateZ(calc(var(--phone-d) / 2));
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--chassis-hi), var(--chassis-mid) 55%, var(--chassis-dark));
+  }
+
+  /* ---------------------------------------------------------------------
+     LEFT SPINE — thin strip, rotated 90° and swung out to the left edge.
+     This is the side the reference image exposes.
+     --------------------------------------------------------------------- */
+  .face-left{
+    width: var(--phone-d);
+    height: var(--phone-h);
+    left: calc((var(--phone-w) - var(--phone-d)) / 2);
+    top: 0;
+    transform: rotateY(-90deg) translateZ(calc(var(--phone-w) / 2));
+    border-radius: var(--radius);
+    background: linear-gradient(90deg,
+                  var(--metal-dark) 0%,
+                  var(--metal-light) 22%,
+                  var(--metal-mid) 55%,
+                  var(--metal-dark) 100%);
+  }
+
+  /* Volume rocker + power-adjacent button, built as raised bars on the
+     left spine using layered gradients + shadows (no images) */
+  .face-left::before,
+  .face-left::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 68%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    background: linear-gradient(90deg, #85878d, #dcdde0 45%, #929499);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.6),
+      inset 0 -1px 1px rgba(0,0,0,0.35);
+  }
+  .face-left::before{ top: 21%; height: 9%; }   /* volume rocker  */
+  .face-left::after { top: 33%; height: 4.5%; } /* power button   */
+
+  /* ---------------------------------------------------------------------
+     RIGHT SPINE — present for a complete, physically-correct shell, even
+     though the current camera angle keeps it turned away from view.
+     --------------------------------------------------------------------- */
+  .face-right{
+    width: var(--phone-d);
+    height: var(--phone-h);
+    left: calc((var(--phone-w) - var(--phone-d)) / 2);
+    top: 0;
+    transform: rotateY(90deg) translateZ(calc(var(--phone-w) / 2));
+    border-radius: var(--radius);
+    background: linear-gradient(90deg,
+                  var(--metal-dark) 0%,
+                  var(--metal-light) 30%,
+                  var(--metal-mid) 60%,
+                  var(--metal-dark) 100%);
+  }
+
+  /* ---------------------------------------------------------------------
+     TOP EDGE — folded away from camera by the backward tilt, but modeled
+     for correctness (mic pinhole).
+     --------------------------------------------------------------------- */
+  .face-top{
+    width: var(--phone-w);
+    height: var(--phone-d);
+    left: 0;
+    top: calc((var(--phone-h) - var(--phone-d)) / 2);
+    transform: rotateX(90deg) translateZ(calc(var(--phone-h) / 2));
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--metal-light), var(--metal-dark));
+  }
+  .face-top::before{
+    content:"";
+    position:absolute;
+    left:50%; top:50%;
+    width:3px; height:3px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:#1a1a1a;
+    box-shadow: inset 0 0 1px #000;
+  }
+
+  /* ---------------------------------------------------------------------
+     BOTTOM EDGE — the edge the backward tilt exposes to the camera.
+     Carries the USB-C port and a row of speaker-grille dots.
+     --------------------------------------------------------------------- */
+  .face-bottom{
+    width: var(--phone-w);
+    height: var(--phone-d);
+    left: 0;
+    top: calc((var(--phone-h) - var(--phone-d)) / 2);
+    transform: rotateX(-90deg) translateZ(calc(var(--phone-h) / 2));
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--metal-mid), var(--metal-dark) 60%, var(--metal-mid));
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.25);
+  }
+
+  /* Speaker grille — a row of tiny dots built with a repeating gradient,
+     no image assets required */
+  .face-bottom::before{
+    content:"";
+    position:absolute;
+    right: 14%;
+    top: 50%;
+    width: 34%;
+    height: 46%;
+    transform: translateY(-50%);
+    background-image: radial-gradient(circle, rgba(0,0,0,0.55) 1px, transparent 1.3px);
+    background-size: 5px 100%;
+    background-repeat: repeat-x;
+  }
+
+  /* USB-C port cutout */
+  .face-bottom::after{
+    content:"";
+    position:absolute;
+    left: 44%;
+    top: 50%;
+    width: 12%;
+    height: 44%;
+    transform: translate(-50%, -50%);
+    background: #0a0a0a;
+    border-radius: 2px;
+    box-shadow: inset 0 0 1px rgba(255,255,255,0.15);
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="stage">
+
+    <!-- Soft floor shadow the phone rests on -->
+    <div class="ground-shadow"></div>
+
+    <!-- 3D camera / rotation context -->
+    <div class="scene">
+      <div class="phone">
+
+        <!-- FRONT: bezel + screen + camera -->
+        <div class="face face-front">
+          <div class="bezel">
+
+            <!-- =========================================================
+                 CUSTOM UI GOES HERE
+                 #ux-embed-container is a plain, flat, overflow-hidden box.
+                 Drop any HTML/CSS/JS (or an <iframe>) inside it and it will
+                 render as the phone's screen content, unaffected by the
+                 parent 3D transforms.
+                 ========================================================= -->
+            <div id="ux-embed-container">
+
+              <!-- Demo placeholder — replace with real UI -->
+              <div class="demo-ui">
+                <strong>#ux-embed-container</strong>
+                <span>Drop any HTML / CSS / JS in here.<br>It renders as a flat, clipped viewport.</span>
+              </div>
+
+            </div>
+
+            <!-- Glass sheen sits above the embed so it always looks like a screen -->
+            <div class="glass-reflection"></div>
+
+            <!-- Physical hole-punch camera cutout, above everything -->
+            <div class="camera-hole"></div>
+
+          </div>
+        </div>
+
+        <!-- Remaining 5 faces build the physical chassis -->
+        <div class="face face-back"></div>
+        <div class="face face-left"></div>
+        <div class="face face-right"></div>
+        <div class="face face-top"></div>
+        <div class="face face-bottom"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

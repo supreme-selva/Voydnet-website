@@ -1,0 +1,131 @@
+/* ==========================================================================
+   COMPONENT STYLES: final-cta
+   --------------------------------------------------------------------------
+   A full-bleed, layered closing section:
+
+     .fcta__birds   — LAYER 1: birds video, object-fit:cover, fills the whole
+                      section across both horizontal edges. Loops forever.
+     .fcta__mobile  — LAYER 2: mobile video centred on top of the birds video.
+                      Loops forever, plays simultaneously.
+     .fcta__content — LAYER 3: headline / subtext / button / micro-copy,
+                      overlapping the birds layer, sitting above everything.
+
+   A soft gradient scrim under the content keeps the copy legible over the
+   moving video without hiding the imagery.
+   ========================================================================== */
+
+.fcta {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;             /* own stacking context for the layers */
+}
+
+/* ---- LAYER 1: birds video, full cover ---- */
+.fcta__birds {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* fill both horizontal edges fully */
+  z-index: 1;
+}
+
+/* ---- LAYER 2: mobile video, pinned to the RIGHT edge, vertically centred -- */
+.fcta__mobile {
+  position: absolute;
+  top: 50%;
+  right: clamp(24px, 5vw, 90px);
+  left: auto;
+  transform: translateY(-50%);
+  width: min(40%, 480px);
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Gradient scrim (from the top-left) to keep the copy readable over video. */
+.fcta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(
+    to bottom right,
+    rgba(20, 18, 14, 0.58) 0%,
+    rgba(20, 18, 14, 0.28) 32%,
+    rgba(20, 18, 14, 0) 60%
+  );
+  pointer-events: none;
+}
+
+/* ---- LAYER 3: copy, TOP-LEFT, overlapping the birds layer ---- */
+.fcta__content {
+  position: absolute;
+  z-index: 4;
+  top: clamp(48px, 10vh, 120px);
+  left: clamp(24px, 6vw, 96px);
+  text-align: left;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #fff;
+}
+
+.fcta__headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(34px, 5.2vw, 66px);
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.fcta__subtext {
+  margin-top: var(--space-4);
+  max-width: 46ch;
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
+.fcta__cta {
+  margin-top: var(--space-6);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fcta__microcopy {
+  margin-top: var(--space-3);
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* On the dark video, the CTA button reads best as cream-on-ink or a light
+   pill. Give the primary button here a light treatment. */
+.fcta__cta .btn--primary {
+  --btn-bg: #fff;
+  --btn-fg: var(--color-ink);
+  --btn-bg-hover: #f1ece3;
+}
+
+/* ---- Responsive: on narrow screens keep text top-left, move the phone
+   lower-right so they don't collide. ---- */
+@media (max-width: 760px) {
+  .fcta__mobile {
+    width: min(58%, 300px);
+    top: auto;
+    bottom: clamp(24px, 6vh, 60px);
+    transform: none;
+  }
+  .fcta__content {
+    max-width: min(88%, 480px);
+  }
+}

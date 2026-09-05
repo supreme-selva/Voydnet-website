@@ -1,0 +1,40 @@
+/* ==========================================================================
+   MAIN STYLESHEET  —  the cascade entry point
+   --------------------------------------------------------------------------
+   Imports every style layer in strict ITCSS order (low specificity first,
+   high specificity last) so the cascade stays predictable:
+
+     1. tokens      → design variables (settings)
+     2. base        → reset + element defaults (generic + elements)
+     3. layout      → structural objects
+     4. components  → each self-contained UI piece owns its own stylesheet,
+                      imported here so index.html only ever links ONE css file
+     5. utilities   → single-purpose overrides (must win → loaded last)
+
+   index.html links ONLY this file. Everything else is composed here.
+   ========================================================================== */
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./layout.css";
+
+/* ---- Component stylesheets (colocated with their component folder) ------ */
+@import "../components/hero/hero.css";
+@import "../components/feature-protect/feature-protect.css";
+@import "../components/feature-transparency/feature-transparency.css";
+@import "../components/feature-seamless/feature-seamless.css";
+@import "../components/feature-local/feature-local.css";
+@import "../components/final-cta/final-cta.css";
+/* phone-mockup is a family of interchangeable models; import each model. */
+@import "../components/phone-mockup/models/model-1/model-1.css";
+@import "../components/phone-mockup/models/model-2/model-2.css";
+@import "../components/phone-mockup/models/model-3/model-3.css";
+@import "../components/phone-mockup/models/model-3/model-3.css";
+@import "../components/embed-view/embed-view.css";
+@import "../components/button/button.css";
+
+/* ---- Page-level styles -------------------------------------------------- */
+@import "../pages/showcase/showcase.css";
+
+/* ---- Utilities MUST be last so they can override when applied ----------- */
+@import "./utilities.css";

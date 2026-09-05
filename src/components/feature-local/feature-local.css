@@ -1,0 +1,86 @@
+/* ==========================================================================
+   COMPONENT STYLES: feature-local
+   --------------------------------------------------------------------------
+   Two-column feature: illustration on the left, copy on the right. Matches
+   the elegant, creamy-white, Times New Roman voice of the other sections.
+   Stacks to a single centred column on small screens (image on top).
+   ========================================================================== */
+
+.flocal {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-7) var(--space-6);
+  background: var(--bg-scene);
+}
+
+.flocal__inner {
+  width: min(100%, 1320px);
+  margin-inline: auto;
+  display: grid;
+  /* Wider image column, narrower copy column. */
+  grid-template-columns: 1.5fr 1fr;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* ---- Left: illustration ---- */
+.flocal__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: visible;
+}
+.flocal__illustration {
+  /* Large, but bounded so the whole image stays on-screen. It fills its
+     (wide) grid column and is capped, rather than overflowing off the left
+     edge of the viewport. */
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  object-fit: contain;
+  /* Soft grounded shadow for depth. */
+  filter: drop-shadow(0 30px 44px rgba(60, 50, 30, 0.26));
+}
+
+/* ---- Right: copy ---- */
+.flocal__copy {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.flocal__headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.06;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
+}
+.flocal__subtext {
+  margin-top: var(--space-5);
+  max-width: 52ch;
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+/* ---- Responsive: stack into one centred column (image on top) ---- */
+@media (max-width: 900px) {
+  .flocal__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--space-4);
+  }
+  .flocal__media { order: 1; }
+  .flocal__copy {
+    order: 2;
+    text-align: center;
+    align-items: center;
+  }
+  .flocal__subtext { margin-inline: auto; }
+}

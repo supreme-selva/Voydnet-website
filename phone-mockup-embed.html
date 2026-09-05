@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Dual Android Phone Mockup</title>
+    <style>
+        /* ============================================
+           ROOT VARIABLES & RESET
+           ============================================ */
+        :root {
+            /* Phone dimensions (Android flagship proportions) */
+            --phone-width: 240px;
+            --phone-height: 500px;
+            --phone-radius: 38px;
+            --bezel-width: 6px;
+            --frame-thickness: 10px;
+            
+            /* Colors - Titanium/Graphite finish */
+            --frame-primary: #5a5a5a;
+            --frame-secondary: #707070;
+            --frame-highlight: #909090;
+            --frame-shadow: #2a2a2a;
+            --frame-edge-light: #b0b0b0;
+            --frame-edge-dark: #1a1a1a;
+            
+            /* Screen colors */
+            --screen-bezel: #0a0a0a;
+            --screen-bg: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e8eaed 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           3D SCENE CONTAINER
+           ============================================ */
+        .scene {
+            width: 800px;
+            height: 800px;
+            perspective: 2000px;
+            perspective-origin: 50% 45%;
+            position: relative;
+        }
+
+        .phones-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* ============================================
+           PHONE BASE STRUCTURE
+           ============================================ */
+        .phone {
+            position: absolute;
+            width: var(--phone-width);
+            height: var(--phone-height);
+            transform-style: preserve-3d;
+        }
+
+        /* Phone 1 - Upper right, tilted right, less steep */
+        .phone-1 {
+            top: 80px;
+            left: 380px;
+            transform: 
+                rotateX(5deg)
+                rotateY(-20deg)
+                rotateZ(12deg);
+            z-index: 2;
+        }
+
+        /* Phone 2 - Lower left, tilted more, steeper angle */
+        .phone-2 {
+            top: 200px;
+            left: 120px;
+            transform: 
+                rotateX(8deg)
+                rotateY(-30deg)
+                rotateZ(25deg);
+            z-index: 1;
+        }
+
+        /* ============================================
+           PHONE CHASSIS - 15 LAYERS FOR DEPTH
+           ============================================ */
+        .phone-body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Frame layers - creates 3D thickness effect */
+        .frame-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--phone-radius);
+            transform-style: preserve-3d;
+        }
+
+        /* Generate 15 frame layers for solid edge depth */
+        .frame-layer:nth-child(1) { transform: translateZ(0px); }
+        .frame-layer:nth-child(2) { transform: translateZ(-0.7px); }
+        .frame-layer:nth-child(3) { transform: translateZ(-1.4px); }
+        .frame-layer:nth-child(4) { transform: translateZ(-2.1px); }
+        .frame-layer:nth-child(5) { transform: translateZ(-2.8px); }
+        .frame-layer:nth-child(6) { transform: translateZ(-3.5px); }
+        .frame-layer:nth-child(7) { transform: translateZ(-4.2px); }
+        .frame-layer:nth-child(8) { transform: translateZ(-4.9px); }
+        .frame-layer:nth-child(9) { transform: translateZ(-5.6px); }
+        .frame-layer:nth-child(10) { transform: translateZ(-6.3px); }
+        .frame-layer:nth-child(11) { transform: translateZ(-7px); }
+        .frame-layer:nth-child(12) { transform: translateZ(-7.7px); }
+        .frame-layer:nth-child(13) { transform: translateZ(-8.4px); }
+        .frame-layer:nth-child(14) { transform: translateZ(-9.1px); }
+        .frame-layer:nth-child(15) { transform: translateZ(-9.8px); }
+
+        /* Metallic gradient for frame layers */
+        .frame-layer {
+            background: linear-gradient(
+                145deg,
+                var(--frame-highlight) 0%,
+                var(--frame-primary) 15%,
+                var(--frame-secondary) 35%,
+                var(--frame-primary) 55%,
+                var(--frame-shadow) 75%,
+                var(--frame-edge-dark) 100%
+            );
+            border: 1px solid;
+            border-color: var(--frame-edge-light) var(--frame-shadow) var(--frame-edge-dark) var(--frame-highlight);
+        }
+
+        /* Back layer - darker */
+        .frame-layer:nth-child(15) {
+            background: linear-gradient(
+                145deg,
+                var(--frame-shadow) 0%,
+                var(--frame-edge-dark) 50%,
+                #0a0a0a 100%
+            );
+        }
+
+        /* ============================================
+           SCREEN BEZEL & DISPLAY AREA
+           ============================================ */
+        .screen-bezel {
+            position: absolute;
+            top: var(--bezel-width);
+            left: var(--bezel-width);
+            right: var(--bezel-width);
+            bottom: var(--bezel-width);
+            background: var(--screen-bezel);
+            border-radius: calc(var(--phone-radius) - 4px);
+            transform: translateZ(1px);
+            overflow: hidden;
+        }
+
+        /* Screen glass layer */
+        .screen-glass {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: #000;
+            border-radius: calc(var(--phone-radius) - 6px);
+            overflow: hidden;
+        }
+
+        /* ============================================
+           EMBED DISPLAY CONTAINERS
+           Black screens ready for image/video injection
+           ============================================ */
+        .phone-display {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000000;
+            border-radius: calc(var(--phone-radius) - 6px);
+            /* Flat viewport - no 3D transform inheritance */
+            transform-style: flat;
+        }
+
+        /* Styles for embedded content */
+        .phone-display img,
+        .phone-display video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .phone-display iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ============================================
+           ANDROID PUNCH-HOLE CAMERA
+           ============================================ */
+        .punch-hole-camera {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(2px);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 35% 35%, 
+                #1a3a5c 0%, 
+                #0a1a2c 50%, 
+                #000 80%);
+            border-radius: 50%;
+            z-index: 100;
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.15),
+                0 0 0 2px rgba(0,0,0,0.9),
+                0 0 0 3px rgba(30,30,30,0.5);
+        }
+
+        /* Lens reflection */
+        .punch-hole-camera::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* ============================================
+           GLASS GLARE OVERLAY
+           ============================================ */
+        .screen-glare {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: calc(var(--phone-radius) - 6px);
+            background: linear-gradient(
+                125deg,
+                rgba(255,255,255,0.12) 0%,
+                rgba(255,255,255,0.04) 25%,
+                transparent 45%,
+                transparent 100%
+            );
+            pointer-events: none;
+            z-index: 50;
+            transform: translateZ(2px);
+        }
+
+        /* ============================================
+           LEFT SIDE BUTTONS - Volume
+           ============================================ */
+        .buttons-left {
+            position: absolute;
+            left: -3px;
+            top: 100px;
+            transform-style: preserve-3d;
+        }
+
+        /* Volume Up */
+        .volume-up {
+            position: absolute;
+            top: 0;
+            width: 3px;
+            height: 50px;
+            background: linear-gradient(180deg, #606060 0%, #404040 50%, #505050 100%);
+            border-radius: 2px 0 0 2px;
+            transform: translateZ(-4px) rotateY(-90deg);
+            transform-origin: right center;
+            box-shadow: 
+                inset 1px 0 1px rgba(255,255,255,0.15),
+                inset -1px 0 1px rgba(0,0,0,0.3);
+        }
+
+        /* Volume Down */
+        .volume-down {
+            position: absolute;
+            top: 60px;
+            width: 3px;
+            height: 50px;
+            background: linear-gradient(180deg, #606060 0%, #404040 50%, #505050 100%);
+            border-radius: 2px 0 0 2px;
+            transform: translateZ(-4px) rotateY(-90deg);
+            transform-origin: right center;
+            box-shadow: 
+                inset 1px 0 1px rgba(255,255,255,0.15),
+                inset -1px 0 1px rgba(0,0,0,0.3);
+        }
+
+        /* ============================================
+           RIGHT SIDE BUTTON - Power
+           ============================================ */
+        .button-right {
+            position: absolute;
+            right: -3px;
+            top: 130px;
+            transform-style: preserve-3d;
+        }
+
+        .power-button {
+            width: 3px;
+            height: 55px;
+            background: linear-gradient(180deg, #606060 0%, #404040 50%, #505050 100%);
+            border-radius: 0 2px 2px 0;
+            transform: translateZ(-4px) rotateY(90deg);
+            transform-origin: left center;
+            box-shadow: 
+                inset -1px 0 1px rgba(255,255,255,0.15),
+                inset 1px 0 1px rgba(0,0,0,0.3);
+        }
+
+        /* ============================================
+           BOTTOM EDGE - USB-C, Speakers, Microphone
+           ============================================ */
+        .bottom-edge {
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(-4px) rotateX(90deg);
+            transform-origin: center top;
+            width: 180px;
+            height: 10px;
+            background: linear-gradient(
+                180deg,
+                var(--frame-shadow) 0%,
+                var(--frame-primary) 30%,
+                var(--frame-secondary) 70%,
+                var(--frame-shadow) 100%
+            );
+            border-radius: 0 0 3px 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* Speaker grills */
+        .speaker-grill {
+            display: flex;
+            gap: 2.5px;
+        }
+
+        .speaker-hole {
+            width: 3px;
+            height: 3px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            box-shadow: inset 0 0.5px 1px rgba(0,0,0,0.9);
+        }
+
+        /* USB-C Port */
+        .usb-port {
+            width: 20px;
+            height: 6px;
+            background: linear-gradient(
+                180deg,
+                #0a0a0a 0%,
+                #1a1a1a 50%,
+                #0a0a0a 100%
+            );
+            border-radius: 2px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.9);
+        }
+
+        /* Microphone hole */
+        .mic-hole {
+            width: 4px;
+            height: 4px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            box-shadow: inset 0 0.5px 1px rgba(0,0,0,0.9);
+        }
+
+        /* ============================================
+           VOLUMETRIC DROP SHADOWS
+           ============================================ */
+        .phone-shadow {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            width: 220px;
+            height: 80px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(0,0,0,0.3) 0%,
+                rgba(0,0,0,0.12) 45%,
+                transparent 75%
+            );
+            transform: translateX(-50%) rotateX(90deg);
+            filter: blur(18px);
+        }
+
+        /* Secondary ambient shadow */
+        .phone::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: 5%;
+            width: 90%;
+            height: 350px;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(0,0,0,0.08) 100%
+            );
+            transform: translateZ(-60px) rotateX(75deg);
+            filter: blur(25px);
+            pointer-events: none;
+        }
+
+        /* ============================================
+           FRAME EDGE HIGHLIGHTS
+           ============================================ */
+        .edge-highlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--phone-radius);
+            border: 1px solid transparent;
+            background: linear-gradient(
+                140deg,
+                rgba(255,255,255,0.35) 0%,
+                transparent 25%,
+                transparent 75%,
+                rgba(0,0,0,0.15) 100%
+            ) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transform: translateZ(1px);
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         3D SCENE CONTAINER
+         ============================================ -->
+    <div class="scene">
+        <div class="phones-container">
+            
+            <!-- ============================================
+                 PHONE 1 - Upper Right Position
+                 Less rotation, appears higher
+                 ============================================ -->
+            <div class="phone phone-1">
+                <div class="phone-body">
+                    <!-- 15 Frame Layers for 3D Thickness -->
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    
+                    <!-- Edge Highlight -->
+                    <div class="edge-highlight"></div>
+                    
+                    <!-- Screen Area -->
+                    <div class="screen-bezel">
+                        <div class="screen-glass">
+                            <!-- ========================================
+                                 PHONE 1 EMBED DISPLAY
+                                 ==========================================
+                                 INSERT YOUR IMAGE/VIDEO/IFRAME HERE
+                                 Example:
+                                 <img src="your-image.jpg" alt="">
+                                 <video src="your-video.mp4" autoplay muted loop></video>
+                                 <iframe src="your-url"></iframe>
+                                 ========================================== -->
+                            <div class="phone-display" id="phone-1-display">
+                                <!-- Empty black screen - ready for embed -->
+                            </div>
+                            
+                            <!-- Android Punch-Hole Camera -->
+                            <div class="punch-hole-camera"></div>
+                            
+                            <!-- Glass Glare Overlay -->
+                            <div class="screen-glare"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Left Side Buttons -->
+                    <div class="buttons-left">
+                        <div class="volume-up"></div>
+                        <div class="volume-down"></div>
+                    </div>
+                    
+                    <!-- Right Side Button -->
+                    <div class="button-right">
+                        <div class="power-button"></div>
+                    </div>
+                    
+                    <!-- Bottom Edge with Ports -->
+                    <div class="bottom-edge">
+                        <div class="speaker-grill">
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                        </div>
+                        <div class="mic-hole"></div>
+                        <div class="usb-port"></div>
+                        <div class="mic-hole"></div>
+                        <div class="speaker-grill">
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Drop Shadow -->
+                <div class="phone-shadow"></div>
+            </div>
+
+            <!-- ============================================
+                 PHONE 2 - Lower Left Position  
+                 More rotation, appears lower with overlap
+                 ============================================ -->
+            <div class="phone phone-2">
+                <div class="phone-body">
+                    <!-- 15 Frame Layers for 3D Thickness -->
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    <div class="frame-layer"></div>
+                    
+                    <!-- Edge Highlight -->
+                    <div class="edge-highlight"></div>
+                    
+                    <!-- Screen Area -->
+                    <div class="screen-bezel">
+                        <div class="screen-glass">
+                            <!-- ========================================
+                                 PHONE 2 EMBED DISPLAY
+                                 ==========================================
+                                 INSERT YOUR IMAGE/VIDEO/IFRAME HERE
+                                 Example:
+                                 <img src="your-image.jpg" alt="">
+                                 <video src="your-video.mp4" autoplay muted loop></video>
+                                 <iframe src="your-url"></iframe>
+                                 ========================================== -->
+                            <div class="phone-display" id="phone-2-display">
+                                <!-- Empty black screen - ready for embed -->
+                            </div>
+                            
+                            <!-- Android Punch-Hole Camera -->
+                            <div class="punch-hole-camera"></div>
+                            
+                            <!-- Glass Glare Overlay -->
+                            <div class="screen-glare"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Left Side Buttons -->
+                    <div class="buttons-left">
+                        <div class="volume-up"></div>
+                        <div class="volume-down"></div>
+                    </div>
+                    
+                    <!-- Right Side Button -->
+                    <div class="button-right">
+                        <div class="power-button"></div>
+                    </div>
+                    
+                    <!-- Bottom Edge with Ports -->
+                    <div class="bottom-edge">
+                        <div class="speaker-grill">
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                        </div>
+                        <div class="mic-hole"></div>
+                        <div class="usb-port"></div>
+                        <div class="mic-hole"></div>
+                        <div class="speaker-grill">
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                            <div class="speaker-hole"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Drop Shadow -->
+                <div class="phone-shadow"></div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

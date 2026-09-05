@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Voydnet — privacy in one tap. A modular pure HTML/CSS/JS showcase." />
+  <title>Voydnet</title>
+
+  <!--
+    ────────────────────────────────────────────────────────────────────────
+    THIN APP SHELL
+    This file is intentionally almost empty. It links exactly ONE stylesheet
+    (the ITCSS cascade entry point) and ONE module (the app bootstrap).
+    All markup is composed at runtime from the modular pieces under /src by
+    the router and the component loader. See README.md for the architecture.
+    ────────────────────────────────────────────────────────────────────────
+  -->
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+
+  <!-- The whole app lives inside this shell. The router renders the active
+       page into [data-route-outlet]. -->
+  <div class="app-shell">
+    <main class="route-outlet" data-route-outlet></main>
+  </div>
+
+  <!-- Single ES-module entry point. type="module" gives us native imports,
+       dynamic code-splitting per route, and strict mode for free. -->
+  <script type="module" src="src/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!-- ==========================================================================
+     PHONE MOCKUP — MODEL 3  ("pill notch, mirrored pose")
+     --------------------------------------------------------------------------
+     A clean modern device with a centred pill-shaped notch and a pose that
+     tilts the opposite way to model-1, so a pair of model-3 phones can angle
+     toward / away from each other nicely. Screen inner ratio is tuned to
+     720x1600 (0.45) so portrait illustrations fill with no cropping.
+
+     Pure markup partial. Look lives in model-3.css, behaviour in model-3.js.
+     Screen mount is [data-slot="screen"] — the shared contract every model
+     exposes so embed-view works on any model.
+     ========================================================================== -->
+<div class="pm pm--model-3" data-component="phone-mockup" data-model="3">
+
+  <div class="pm__floor-shadow"></div>
+
+  <div class="pm__device">
+
+    <!-- FRONT: chassis > bezel > screen > pill notch > embed mount -->
+    <div class="pm__face pm__face--front">
+      <div class="pm__bezel">
+        <div class="pm__screen">
+          <div class="pm__notch"></div>
+          <div class="pm__embed" data-slot="screen"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="pm__face pm__face--back">
+      <div class="pm__camera-bump"></div>
+    </div>
+
+    <!-- SPINES -->
+    <div class="pm__face pm__face--left"></div>
+    <div class="pm__face pm__face--right"></div>
+    <div class="pm__face pm__face--top"></div>
+    <div class="pm__face pm__face--bottom"></div>
+
+  </div>
+
+</div>

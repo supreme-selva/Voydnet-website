@@ -1,0 +1,38 @@
+<!-- ==========================================================================
+     PHONE MOCKUP — MODEL 2  ("metal-frame, glass sheen")
+     --------------------------------------------------------------------------
+     A thicker, more industrial Android device: metallic spines with a raised
+     volume rocker + power button, a diagonal glass reflection over the
+     screen, a hole-punch camera, plus a modelled USB-C port and speaker
+     grille on the bottom edge. Different pose (turned to show the LEFT spine).
+
+     Same contract as every model: the screen mount is [data-slot="screen"],
+     so embed-view drops a video/iframe in exactly as it does for model 1.
+     ========================================================================== -->
+<div class="pm pm--model-2" data-component="phone-mockup" data-model="2">
+
+  <div class="pm__floor-shadow"></div>
+
+  <div class="pm__device">
+
+    <!-- FRONT: chassis > bezel > screen > sheen > camera -->
+    <div class="pm__face pm__face--front">
+      <div class="pm__bezel">
+        <div class="pm__embed" data-slot="screen"></div>
+        <div class="pm__glass"></div>
+        <div class="pm__camera-hole"></div>
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="pm__face pm__face--back"></div>
+
+    <!-- SPINES + EDGES -->
+    <div class="pm__face pm__face--left"></div>
+    <div class="pm__face pm__face--right"></div>
+    <div class="pm__face pm__face--top"></div>
+    <div class="pm__face pm__face--bottom"></div>
+
+  </div>
+
+</div>

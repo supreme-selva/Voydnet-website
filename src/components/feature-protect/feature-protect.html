@@ -1,0 +1,29 @@
+<!-- ==========================================================================
+     COMPONENT: feature-protect  (second section of the site)
+     --------------------------------------------------------------------------
+     A two-column feature block on the creamy-white page:
+
+       LEFT  — the "one tap, all protected" illustration image.
+       RIGHT — the headline + supporting copy.
+
+     Copy is referenced by key (data-i18n) and filled from the content
+     registry at runtime, so wording and translations live outside this
+     markup. The illustration's src is set by the controller from the asset
+     registry.
+     ========================================================================== -->
+<section class="feature" data-component="feature-protect">
+  <div class="feature__inner">
+
+    <!-- LEFT: the "one tap, all protected" illustration (image only) -->
+    <div class="feature__media">
+      <img class="feature__illustration" data-slot="illustration" alt="" />
+    </div>
+
+    <!-- RIGHT: copy -->
+    <div class="feature__copy">
+      <h2 class="feature__headline" data-i18n="protect.headline"></h2>
+      <p class="feature__subtext" data-i18n="protect.subtext"></p>
+    </div>
+
+  </div>
+</section>

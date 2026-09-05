@@ -1,0 +1,67 @@
+<!-- ==========================================================================
+     CONTENT REGISTRY  —  English (en)
+     --------------------------------------------------------------------------
+     EVERY piece of user-facing copy on the site lives here, keyed by a stable
+     token. Components never hard-code text; they read a key from this file via
+     the strings loader (src/content/strings.js). This gives us:
+
+       • one place to review / edit all wording,
+       • translation-readiness: add strings.fr.html, strings.es.html, … with
+         the SAME keys and switch locale — no component changes needed.
+
+     FORMAT
+     Each entry is an element carrying a `data-key`. Its innerHTML is the
+     content for that key (inline markup like <br> is allowed). Keep keys
+     namespaced by area, e.g. "hero.headline".
+     ========================================================================== -->
+<div data-strings data-locale="en">
+
+  <!-- ── Brand ─────────────────────────────────────────────────────────── -->
+  <span data-key="brand.name">Voydnet</span>
+
+  <!-- ── Hero (first section) ──────────────────────────────────────────── -->
+  <span data-key="hero.headline">Pure internet.<br>Zero noise.</span>
+
+  <span data-key="hero.subtext">Total visibility into your network. Block ads and hidden trackers system-wide across all your apps, and experience the unrestricted web with zero friction.</span>
+
+  <span data-key="hero.cta.primary">Get Voydnet</span>
+
+  <!-- ── Feature: one-tap protection (second section) ──────────────────── -->
+  <span data-key="protect.headline">Protected in one tap.</span>
+
+  <span data-key="protect.subtext">Block system-wide ads, sever hidden trackers, and unlock the unrestricted web, all running silently in the background.</span>
+
+  <!-- ── Feature: absolute transparency (third section) ────────────────── -->
+  <span data-key="transparency.headline">Absolute transparency. Nothing stays hidden.</span>
+
+  <span data-key="transparency.subtext">Real-time insights into every blocked ad and severed tracking connection across your device. Know exactly what your phone is doing behind your back.</span>
+
+  <!-- ── Feature: seamless protection (fourth section) ─────────────────── -->
+  <span data-key="seamless.headline">Seamless protection. Zero slowdowns.</span>
+
+  <span data-key="seamless.subtext">Enjoy an open, secure web without the heavy lag of a traditional VPN. Voydnet is built to be completely invisible, keeping your mobile speeds lightning fast while protecting you everywhere you go.</span>
+
+  <span data-key="seamless.item1.title">Safe on any Wi-Fi</span>
+  <span data-key="seamless.item1.body">Whether you are at a cafe or an airport, your connection is strictly encrypted. This stops public networks from snooping on your habits or injecting unwanted ads onto your screen.</span>
+
+  <span data-key="seamless.item2.title">The internet, without borders</span>
+  <span data-key="seamless.item2.body">Keep your browsing private so nobody can monitor or interfere with where you go online. You get smooth, open access to the web without interference, exactly as it was meant to be.</span>
+
+  <span data-key="seamless.item3.title">Lightning fast</span>
+  <span data-key="seamless.item3.body">Traditional VPNs route your traffic through distant servers, which drains your battery and slows down your internet. Voydnet filters everything instantly on your own device, delivering total security without dropping your speed.</span>
+
+  <!-- ── Feature: works locally (fifth section) ────────────────────────── -->
+  <span data-key="local.headline">Your data never leaves your hands.</span>
+
+  <span data-key="local.subtext">Voydnet's network filtering operates 100% locally on your device. Zero external routing servers and absolutely no logs. We protect your privacy by simply not collecting your personal data in the first place.</span>
+
+  <!-- ── Final call to action (last section) ───────────────────────────── -->
+  <span data-key="cta.headline">Experience a quieter internet today.</span>
+
+  <span data-key="cta.subtext">Take back control of your device. Setup takes less than 30 seconds.</span>
+
+  <span data-key="cta.button">Download Voydnet</span>
+
+  <span data-key="cta.microcopy">Free to install. No account required.</span>
+
+</div>

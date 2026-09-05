@@ -1,0 +1,41 @@
+<!-- ==========================================================================
+     PHONE MOCKUP — MODEL 1  ("hole-punch, thin bezel")
+     --------------------------------------------------------------------------
+     A slim Android-style device: minimal 4px bezel, round hole-punch camera,
+     clean metal-free edges, gentle floating animation. Its screen inner ratio
+     is tuned to 720x1600 (0.45) so portrait app video fills with no cropping.
+
+     Pure markup partial — no <style>, no <script>. Look lives in model-1.css,
+     behaviour in model-1.js. The screen mount is [data-slot="screen"], the
+     shared contract every model exposes so embed-view works on any model.
+     ========================================================================== -->
+<div class="pm pm--model-1" data-component="phone-mockup" data-model="1">
+
+  <div class="pm__floor-shadow"></div>
+
+  <div class="pm__device">
+
+    <!-- FRONT: chassis > bezel > screen > notch > embed mount -->
+    <div class="pm__face pm__face--front">
+      <div class="pm__bezel">
+        <div class="pm__screen">
+          <div class="pm__notch"></div>
+          <div class="pm__embed" data-slot="screen"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="pm__face pm__face--back">
+      <div class="pm__camera-bump"></div>
+    </div>
+
+    <!-- SPINES -->
+    <div class="pm__face pm__face--left"></div>
+    <div class="pm__face pm__face--right"></div>
+    <div class="pm__face pm__face--top"></div>
+    <div class="pm__face pm__face--bottom"></div>
+
+  </div>
+
+</div>

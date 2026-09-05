@@ -1,0 +1,100 @@
+/* ==========================================================================
+   DESIGN TOKENS  —  the single source of truth for the whole site
+   --------------------------------------------------------------------------
+   Every colour, size, radius, timing and z-index used anywhere in the app
+   is declared here as a CSS custom property. Components never hard-code a
+   raw value; they reference a token. Change a brand colour once, here, and
+   it propagates everywhere. This is the bottom layer of our ITCSS cascade
+   (settings), so it is imported before anything else.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand palette ---------------------------------------------------- */
+  --color-brand:            #238B81;   /* Voydnet teal            */
+  --color-brand-strong:     #1b6d65;
+  --color-accent:           #27AE60;   /* success / "on" green    */
+  --color-danger:           #CB1F1F;   /* alerts / "off" red      */
+
+  /* ---- Neutrals --------------------------------------------------------- */
+  --color-ink:              #0A0A0A;
+  --color-ink-soft:         #4a4f57;
+  --color-muted:            #9aa3ab;
+  --color-line:             #e2e5ea;
+  --color-surface:          #ffffff;
+  --color-surface-alt:      #f5f0ee;
+
+  /* ---- Device / chassis materials -------------------------------------- */
+  --chassis-black:          #1b1c1f;
+  --metal-light:            #f4f5f7;
+  --metal-mid:              #c9cdd3;
+  --metal-dark:             #8b8f96;
+  --screen-white:           #ffffff;
+
+  /* ---- Creamy-white surfaces ------------------------------------------- */
+  --cream:                  #FBF8F2;   /* primary creamy-white backdrop */
+  --cream-soft:             #F4EFE6;   /* slightly deeper cream         */
+  --cream-line:             #E7E0D3;   /* hairline dividers on cream    */
+  /* A thick, warm cream for raised surfaces — clearly deeper than the page
+     background so shapes read as distinct panels sitting on the page. */
+  --cream-thick:            #EFE7D6;
+  --cream-thick-deep:       #e2e3dd5c;
+
+  /* ---- Page backdrop ---------------------------------------------------- */
+  /* A soft, elegant creamy wash — barely-there vertical warmth. */
+  --bg-scene: linear-gradient(180deg, #FDFBF6 0%, var(--cream) 55%, #F6F1E8 100%);
+
+  /* ---- Typography ------------------------------------------------------- */
+  --font-sans: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+  /* Times New Roman is the site's voice — classic, elegant serif. */
+  --font-display: "Times New Roman", Times, Georgia, serif;
+  --font-serif:   "Times New Roman", Times, Georgia, serif;
+
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-md:   16px;
+  --text-lg:   20px;
+  --text-xl:   28px;
+  --text-2xl:  40px;
+
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* ---- Spacing scale (4px base) ---------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ---- Radius ----------------------------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation -------------------------------------------------------- */
+  --shadow-sm: 0 2px 6px rgba(16, 18, 22, 0.10);
+  --shadow-md: 0 8px 24px rgba(16, 18, 22, 0.14);
+  --shadow-lg: 0 30px 80px rgba(16, 18, 22, 0.30);
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:   cubic-bezier(0.25, 1.2, 0.5, 1);
+  --dur-fast:      150ms;
+  --dur-base:      300ms;
+  --dur-slow:      500ms;
+
+  /* ---- Z-index scale (named, never magic numbers) ---------------------- */
+  --z-floor:    1;
+  --z-device:   2;
+  --z-notch:    5;
+  --z-nav:      50;
+  --z-overlay:  100;
+
+  /* ---- Layout container ------------------------------------------------- */
+  --container-max: 1200px;
+}

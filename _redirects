@@ -1,0 +1,4 @@
+# Cloudflare Pages SPA fallback.
+# We use hash routing, so the app lives at the root. Any unmatched path is
+# rewritten to index.html with a 200 so deep links never 404.
+/*    /index.html    200

@@ -1,0 +1,27 @@
+<!-- ==========================================================================
+     COMPONENT: feature-local  (fifth section of the site)
+     --------------------------------------------------------------------------
+     A two-column feature block on the creamy-white page:
+
+       LEFT  — the "works locally, nothing goes out" illustration image.
+       RIGHT — the headline + supporting copy.
+
+     Copy is referenced by key (data-i18n) and filled from the content
+     registry at runtime. The illustration's src is set by the controller.
+     ========================================================================== -->
+<section class="flocal" data-component="feature-local">
+  <div class="flocal__inner">
+
+    <!-- LEFT: illustration -->
+    <div class="flocal__media">
+      <img class="flocal__illustration" data-slot="illustration" alt="" />
+    </div>
+
+    <!-- RIGHT: copy -->
+    <div class="flocal__copy">
+      <h2 class="flocal__headline" data-i18n="local.headline"></h2>
+      <p class="flocal__subtext" data-i18n="local.subtext"></p>
+    </div>
+
+  </div>
+</section>

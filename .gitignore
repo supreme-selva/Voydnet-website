@@ -1,0 +1,11 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Dependency dirs (only if a tool is ever added; none required to run)
+node_modules/
+
+# Local server / tooling output
+.cache/
+dist/

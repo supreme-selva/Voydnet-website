@@ -1,0 +1,12 @@
+/* ==========================================================================
+   PAGE STYLES: showcase
+   --------------------------------------------------------------------------
+   The landing page currently composes a single hero section, which brings
+   its own styling. This file is intentionally minimal — page-level layout
+   for additional stacked sections will be added here as they arrive.
+   ========================================================================== */
+
+.showcase {
+  display: block;
+  width: 100%;
+}

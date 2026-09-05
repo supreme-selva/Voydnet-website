@@ -1,0 +1,160 @@
+/* ==========================================================================
+   PHONE MOCKUP — MODEL 1 STYLES
+   --------------------------------------------------------------------------
+   All selectors are scoped under .pm--model-1 so multiple models can appear
+   on the same page without colliding. Local knobs are component-scoped
+   custom properties; shared look pulls from global design tokens.
+
+   Screen inner ratio matched to the demo video's native 720x1600 (0.45):
+     screen width  = phone-w - 2*bezel = 300 - 8 = 292
+     screen height = 292 / 0.45        ≈ 649  →  phone-h = 649 + 8 = 657
+   ========================================================================== */
+
+.pm--model-1 {
+  --pm-w: 300px;
+  --pm-h: 657px;
+  --pm-depth: 15px;
+  --pm-radius: 52px;
+  --pm-rim: 0px;
+  --pm-bezel: 4px;
+  --pm-rot-x: -10deg;
+  --pm-rot-y: -32deg;
+  --pm-rot-z: -3deg;
+
+  /* Overall size knob. Change --pm-scale (or override it from the host) to
+     resize the whole device without touching the internal geometry, so the
+     video's screen ratio stays exact. 1 = native, 0.66 ≈ two-thirds size. */
+  --pm-scale: 0.66;
+
+  position: relative;
+  /* The outer box hugs the SCALED device (plus a little rotation headroom),
+     so a smaller phone also reserves a smaller footprint in the layout. */
+  width: calc((var(--pm-w) + 90px) * var(--pm-scale));
+  height: calc((var(--pm-h) + 40px) * var(--pm-scale));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+}
+
+/* Floor shadow intentionally hidden: this model floats with NO backdrop so
+   only the 3D device shows over the page. Re-enable by removing display:none
+   if a grounding shadow is ever wanted again. */
+.pm--model-1 .pm__floor-shadow {
+  display: none;
+}
+
+.pm--model-1 .pm__device {
+  position: relative;
+  width: var(--pm-w);
+  height: var(--pm-h);
+  transform-style: preserve-3d;
+  transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z));
+  /* A pronounced, clearly visible bounce: bigger travel + a bouncy ease that
+     rises high and settles down with a little spring. */
+  animation: pm1-float 3.2s cubic-bezier(0.45, 0, 0.35, 1) infinite;
+  z-index: var(--z-device);
+}
+@keyframes pm1-float {
+  /* Rise up (peak) at the midpoint, drop back down at the ends. Range ≈ 40px. */
+  0%   { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(16px); }
+  50%  { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(-24px); }
+  100% { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(16px); }
+}
+
+.pm--model-1 .pm__face { position: absolute; top: 0; left: 0; }
+
+.pm--model-1 .pm__face--front {
+  width: var(--pm-w);
+  height: var(--pm-h);
+  border-radius: var(--pm-radius);
+  transform: translateZ(calc(var(--pm-depth) / 2));
+  background: var(--chassis-black);
+  padding: var(--pm-rim);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.15);
+}
+.pm--model-1 .pm__bezel {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--pm-radius) - var(--pm-rim));
+  background: var(--chassis-black);
+  padding: var(--pm-bezel);
+  box-shadow: inset 0 0 3px 1px rgba(0,0,0,0.8);
+}
+.pm--model-1 .pm__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--pm-radius) - var(--pm-rim) - var(--pm-bezel));
+  background: var(--screen-white);
+  overflow: hidden;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+}
+.pm--model-1 .pm__notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--chassis-black);
+  z-index: var(--z-notch);
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.9);
+  pointer-events: none;
+}
+.pm--model-1 .pm__embed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: var(--z-floor);
+  background: transparent;   /* no screen backdrop — video fills it fully */
+}
+
+.pm--model-1 .pm__face--back {
+  width: var(--pm-w);
+  height: var(--pm-h);
+  border-radius: var(--pm-radius);
+  transform: rotateY(180deg) translateZ(calc(var(--pm-depth) / 2));
+  background: linear-gradient(135deg, #2b2c30 0%, #1c1d20 40%, #26272b 60%, #17181b 100%);
+}
+.pm--model-1 .pm__camera-bump {
+  position: absolute;
+  top: 26px;
+  left: 24px;
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #35363a, #19191c);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+.pm--model-1 .pm__face--left,
+.pm--model-1 .pm__face--right {
+  width: var(--pm-depth);
+  height: calc(var(--pm-h) - 2 * var(--pm-radius));
+  top: var(--pm-radius);
+  left: calc((var(--pm-w) - var(--pm-depth)) / 2);
+  background: var(--chassis-black);
+}
+.pm--model-1 .pm__face--left  { transform: rotateY(-90deg) translateZ(calc(var(--pm-w) / 2)); }
+.pm--model-1 .pm__face--right { transform: rotateY(90deg)  translateZ(calc(var(--pm-w) / 2)); }
+
+.pm--model-1 .pm__face--top,
+.pm--model-1 .pm__face--bottom {
+  width: calc(var(--pm-w) - 2 * var(--pm-radius));
+  height: var(--pm-depth);
+  left: var(--pm-radius);
+  top: calc((var(--pm-h) - var(--pm-depth)) / 2);
+  background: var(--chassis-black);
+}
+.pm--model-1 .pm__face--top    { transform: rotateX(90deg)  translateZ(calc(var(--pm-h) / 2)); }
+.pm--model-1 .pm__face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--pm-h) / 2)); }
+
+@media (max-width: 600px) {
+  .pm--model-1 { transform: scale(0.62); }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .pm--model-1 { transform: scale(0.85); }
+}

@@ -1,0 +1,32 @@
+/* ==========================================================================
+   UTILITIES  —  single-purpose helpers (ITCSS "utilities" layer, top of cascade)
+   --------------------------------------------------------------------------
+   Highest-specificity, do-one-thing classes. Loaded last so they can win
+   when intentionally applied. Keep this list small and deliberate.
+   ========================================================================== */
+
+.u-hidden        { display: none !important; }
+.u-invisible     { visibility: hidden !important; }
+.u-sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.u-no-select     { user-select: none; }
+.u-pointer-none  { pointer-events: none; }
+
+.u-mt-4 { margin-top: var(--space-4); }
+.u-mt-5 { margin-top: var(--space-5); }
+.u-text-center { text-align: center; }
+
+/* Fade transition primitives, driven by JS adding/removing .is-visible. */
+.u-fade {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-standard);
+}
+.u-fade.is-visible { opacity: 1; }

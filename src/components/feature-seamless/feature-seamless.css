@@ -1,0 +1,153 @@
+/* ==========================================================================
+   COMPONENT STYLES: feature-seamless
+   --------------------------------------------------------------------------
+   Three-column feature: main copy (left), centred illustration (center),
+   hover-reveal accordion (right). Matches the elegant, creamy-white, Times
+   New Roman voice of the other sections.
+
+   ACCORDION BEHAVIOUR
+   Each item shows only its sub-heading by default. Hovering an item (or the
+   JS-added .is-open on tap/focus) expands its body with a smooth height +
+   fade transition; leaving collapses it — so one body shows at a time.
+
+   Stacks to a single centred column on small screens (copy, image, list).
+   ========================================================================== */
+
+.fseam {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-7) var(--space-6);
+  background: var(--bg-scene);
+}
+
+.fseam__inner {
+  width: min(100%, 1320px);
+  margin-inline: auto;
+  display: grid;
+  /* Narrower side text columns, a big center column for the illustration. */
+  grid-template-columns: 0.72fr 1.7fr 0.72fr;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ---- Left: main copy ---- */
+.fseam__copy {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.fseam__headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
+}
+.fseam__subtext {
+  margin-top: var(--space-4);
+  max-width: 46ch;
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.35vw, 18px);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+/* ---- Center: large, floating 3D-feel illustration ---- */
+.fseam__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  /* Let the big illustration spill past its narrow grid column without
+     squeezing the side text columns. */
+  overflow: visible;
+  z-index: 1;
+}
+.fseam__illustration {
+  width: 150%;                 /* grow well beyond the center column */
+  max-width: 900px;
+  height: auto;
+  object-fit: contain;
+  /* Soft grounded shadow gives depth; no motion. */
+  filter: drop-shadow(0 34px 46px rgba(60, 50, 30, 0.26));
+}
+
+/* ---- Right: hover-reveal accordion ---- */
+.fseam__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.fseam__item {
+  padding: var(--space-4) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition:
+    background var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard);
+  cursor: default;
+}
+/* Highlight the active (hovered / open) item as a soft cream card. */
+.fseam__item:hover,
+.fseam__item.is-open {
+  background: var(--cream-soft, #F4EFE6);
+  border-color: var(--cream-line, #E7E0D3);
+}
+
+.fseam__item-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(19px, 1.7vw, 24px);
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* Collapsed by default: no height, faded out. */
+.fseam__item-body {
+  display: grid;
+  grid-template-rows: 0fr;               /* collapsed */
+  opacity: 0;
+  margin-top: 0;
+  transition:
+    grid-template-rows var(--dur-base) var(--ease-standard),
+    opacity var(--dur-base) var(--ease-standard),
+    margin-top var(--dur-base) var(--ease-standard);
+}
+.fseam__item-body > p {
+  overflow: hidden;                      /* required for the 0fr→1fr trick */
+  font-family: var(--font-serif);
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+/* Expanded on hover or when JS marks it open (tap / keyboard focus). */
+.fseam__item:hover .fseam__item-body,
+.fseam__item.is-open .fseam__item-body {
+  grid-template-rows: 1fr;               /* expanded */
+  opacity: 1;
+  margin-top: var(--space-3);
+}
+
+/* ---- Responsive: stack to one centred column ---- */
+@media (max-width: 1000px) {
+  .fseam__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--space-5);
+  }
+  .fseam__copy {
+    order: 1;
+    text-align: center;
+    align-items: center;
+  }
+  .fseam__subtext { margin-inline: auto; }
+  .fseam__media { order: 2; }
+  .fseam__list { order: 3; width: min(100%, 520px); }
+}

@@ -1,0 +1,151 @@
+/* ==========================================================================
+   PHONE MOCKUP — MODEL 3 STYLES  ("pill notch, mirrored pose")
+   --------------------------------------------------------------------------
+   Scoped under .pm--model-3. A clean device with a centred pill notch and a
+   pose mirrored from model-1 (rotateY positive), so two of them pair nicely.
+
+   Screen inner ratio matched to the illustrations' ~720x1600 (0.45):
+     screen width  = phone-w - 2*bezel = 300 - 8 = 292
+     screen height = 292 / 0.45        ≈ 649  →  phone-h = 649 + 8 = 657
+   ========================================================================== */
+
+.pm--model-3 {
+  --pm-w: 300px;
+  --pm-h: 657px;
+  --pm-depth: 15px;
+  --pm-radius: 52px;
+  --pm-rim: 0px;
+  --pm-bezel: 4px;
+
+  /* Mirrored pose vs model-1 (positive rotateY reveals the right spine). */
+  --pm-rot-x: -10deg;
+  --pm-rot-y: 30deg;
+  --pm-rot-z: 3deg;
+
+  /* Overall size knob (see model-1). */
+  --pm-scale: 0.6;
+
+  position: relative;
+  width: calc((var(--pm-w) + 90px) * var(--pm-scale));
+  height: calc((var(--pm-h) + 40px) * var(--pm-scale));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+}
+
+/* Floats with NO backdrop — only the 3D device shows over the page. */
+.pm--model-3 .pm__floor-shadow { display: none; }
+
+.pm--model-3 .pm__device {
+  position: relative;
+  width: var(--pm-w);
+  height: var(--pm-h);
+  transform-style: preserve-3d;
+  transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z));
+  animation: pm3-float 4s ease-in-out infinite alternate;
+  z-index: var(--z-device);
+}
+@keyframes pm3-float {
+  from { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(-12px); }
+  to   { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(12px); }
+}
+
+.pm--model-3 .pm__face { position: absolute; top: 0; left: 0; }
+
+.pm--model-3 .pm__face--front {
+  width: var(--pm-w);
+  height: var(--pm-h);
+  border-radius: var(--pm-radius);
+  transform: translateZ(calc(var(--pm-depth) / 2));
+  background: var(--chassis-black);
+  padding: var(--pm-rim);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.15);
+}
+.pm--model-3 .pm__bezel {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--pm-radius) - var(--pm-rim));
+  background: var(--chassis-black);
+  padding: var(--pm-bezel);
+  box-shadow: inset 0 0 3px 1px rgba(0,0,0,0.8);
+}
+.pm--model-3 .pm__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--pm-radius) - var(--pm-rim) - var(--pm-bezel));
+  background: var(--screen-white);
+  overflow: hidden;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+}
+
+/* Round hole-punch camera (centred). */
+.pm--model-3 .pm__notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--chassis-black);
+  z-index: var(--z-notch);
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.9);
+  pointer-events: none;
+}
+.pm--model-3 .pm__embed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: var(--z-floor);
+  background: transparent;
+}
+
+.pm--model-3 .pm__face--back {
+  width: var(--pm-w);
+  height: var(--pm-h);
+  border-radius: var(--pm-radius);
+  transform: rotateY(180deg) translateZ(calc(var(--pm-depth) / 2));
+  background: linear-gradient(135deg, #2b2c30 0%, #1c1d20 40%, #26272b 60%, #17181b 100%);
+}
+.pm--model-3 .pm__camera-bump {
+  position: absolute;
+  top: 26px;
+  right: 24px;                 /* mirrored to the right for this model */
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #35363a, #19191c);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+.pm--model-3 .pm__face--left,
+.pm--model-3 .pm__face--right {
+  width: var(--pm-depth);
+  height: calc(var(--pm-h) - 2 * var(--pm-radius));
+  top: var(--pm-radius);
+  left: calc((var(--pm-w) - var(--pm-depth)) / 2);
+  background: var(--chassis-black);
+}
+.pm--model-3 .pm__face--left  { transform: rotateY(-90deg) translateZ(calc(var(--pm-w) / 2)); }
+.pm--model-3 .pm__face--right { transform: rotateY(90deg)  translateZ(calc(var(--pm-w) / 2)); }
+
+.pm--model-3 .pm__face--top,
+.pm--model-3 .pm__face--bottom {
+  width: calc(var(--pm-w) - 2 * var(--pm-radius));
+  height: var(--pm-depth);
+  left: var(--pm-radius);
+  top: calc((var(--pm-h) - var(--pm-depth)) / 2);
+  background: var(--chassis-black);
+}
+.pm--model-3 .pm__face--top    { transform: rotateX(90deg)  translateZ(calc(var(--pm-h) / 2)); }
+.pm--model-3 .pm__face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--pm-h) / 2)); }
+
+@media (max-width: 600px) {
+  .pm--model-3 { transform: scale(0.62); }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .pm--model-3 { transform: scale(0.85); }
+}

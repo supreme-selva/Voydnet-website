@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3D CSS Phone Mockup — Android Style</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+/* ==========================================================================
+   3D CSS PHONE MOCKUP  —  round hole-punch camera, clean edges
+   --------------------------------------------------------------------------
+   HOW TO USE THIS FILE
+   1. Everything you need to inject your own UI lives inside the element
+      with id="ux-embed-container" (search for it below in the HTML body).
+      It is a flat, absolutely-positioned, overflow:hidden div that sits
+      perfectly flush inside the screen cut-out — treat it exactly like the
+      <body> of your app/site. You can put raw HTML/CSS/JS in there, or
+      swap it for an <iframe src="https://your-app.com"></iframe>.
+   2. The whole device is built from real 3D CSS geometry (6 faces of a
+      box: front / back / left / right / top / bottom) inside a
+      `transform-style: preserve-3d` container, NOT a flat image or a
+      box-shadow trick. That's what makes the left/right edges genuinely
+      visible in 3D as you rotate it. The side/top/bottom faces are
+      explicitly centered on the box's shared pivot point (see the note
+      above .face-left/.face-right below) — skipping that centering is
+      what causes stray diagonal lines when the box rotates.
+   3. All tunable values (size, tilt angle, colors) are CSS custom
+      properties on :root, so you can restyle without touching structure.
+   ========================================================================== */
+
+:root{
+  /* ---- Phone body dimensions (front-facing size + physical thickness) ---- */
+  --phone-w: 280px;      /* overall width of the phone, front view   */
+  --phone-h: 580px;      /* overall height of the phone, front view  */
+  --phone-depth: 15px;   /* physical thickness of the device          */
+  --radius: 52px;        /* outer corner radius of the chassis        */
+
+  /* ---- Layer thicknesses (front face is built as rim > bezel > screen) --- */
+  --rim: 0px;            /* metallic rim removed — kept at 0 so nothing else needs to change */
+  --bezel: 4px;          /* black bezel ring around the screen        */
+
+  /* ---- The 3D "camera" angle. Tweak these three to change the pose. ----
+     rotateX tilts the top of the phone away from the viewer (floating look)
+     rotateY turns the phone left/right (negative reveals the LEFT spine,
+       which is where the mute switch + volume buttons live)
+     rotateZ adds a small dynamic diagonal tilt                         */
+  --rot-x: -10deg;
+  --rot-y: -32deg;
+  --rot-z: -3deg;
+
+  /* ---- Materials ---- */
+  --metal-light: #f4f5f7;
+  --metal-mid:   #c9cdd3;
+  --metal-dark:  #8b8f96;
+  --chassis-black: #1b1c1f;
+  --screen-white: #ffffff;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 30%, #eef0f3 0%, #dde0e5 60%, #cfd3d9 100%);
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   SCENE  —  establishes the perspective for every 3D child
+   ========================================================================== */
+.scene{
+  position: relative;
+  width: calc(var(--phone-w) + 240px);
+  height: calc(var(--phone-h) + 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1600px;      /* distance of the "camera" - controls how strong the 3D looks */
+  perspective-origin: 50% 40%;
+}
+
+/* Soft grounding shadow on the "floor" beneath the phone */
+.floor-shadow{
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  width: calc(var(--phone-w) * 1.05);
+  height: 46px;
+  transform: translateX(-50%) rotateX(78deg);
+  background: radial-gradient(ellipse at center, rgba(20,20,25,0.38) 0%, rgba(20,20,25,0.18) 45%, rgba(20,20,25,0) 75%);
+  filter: blur(6px);
+  z-index: 1;
+}
+
+/* ==========================================================================
+   PHONE 3D  —  the rotated box. preserve-3d makes its children
+   (front/back/left/right/top/bottom) live in one shared 3D space so they
+   form a real box instead of six flat, disconnected layers.
+   ========================================================================== */
+.phone-3d{
+  position: relative;
+  width: var(--phone-w);
+  height: var(--phone-h);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z));
+  animation: float 6s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
+/* gentle floating motion to sell the "isometric floating" brief */
+@keyframes float{
+  from{ transform: rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z)) translateY(-6px); }
+  to  { transform: rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z)) translateY(6px); }
+}
+
+/* Shared base for all six faces of the box */
+.face{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   FRONT FACE — metallic rim > black bezel > white screen > Dynamic Island
+   -------------------------------------------------------------------------- */
+.face-front{
+  width: var(--phone-w);
+  height: var(--phone-h);
+  border-radius: var(--radius);
+  transform: translateZ(calc(var(--phone-depth) / 2));
+  background: var(--chassis-black);
+  padding: var(--rim);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.15);
+}
+
+.bezel{
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius) - var(--rim));
+  background: var(--chassis-black);
+  padding: var(--bezel);
+  box-shadow: inset 0 0 3px 1px rgba(0,0,0,0.8);
+}
+
+.screen{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius) - var(--rim) - var(--bezel));
+  background: var(--screen-white);
+  overflow: hidden; /* keep injected content clipped to the rounded screen */
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.05); /* subtle glass depth */
+}
+
+/* -------- Camera notch: simple round hole-punch camera (Android style) -------- */
+.camera-notch{
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--chassis-black);
+  z-index: 5; /* always sits above injected content, like on a real phone */
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.9);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   THE EMBED VIEWPORT — this is the container you inject your UI into.
+   It fills the entire screen, sits under the Dynamic Island, and clips
+   overflow so your content behaves like a real installed app.
+   -------------------------------------------------------------------------- */
+#ux-embed-container{
+  position: absolute;
+  inset: 0;               /* top/right/bottom/left: 0 */
+  overflow: hidden;
+  z-index: 1;
+  background: #ffffff;    /* replace/override with your app's background */
+}
+
+/* Placeholder content — delete this block and put your real UI markup
+   (or an <iframe>) inside #ux-embed-container instead.                  */
+.placeholder-content{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 32px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #b7bcc4;
+}
+
+/* --------------------------------------------------------------------------
+   BACK FACE — simple brushed-metal / glass back, mirrored gradient
+   -------------------------------------------------------------------------- */
+.face-back{
+  width: var(--phone-w);
+  height: var(--phone-h);
+  border-radius: var(--radius);
+  transform: rotateY(180deg) translateZ(calc(var(--phone-depth) / 2));
+  background: linear-gradient(135deg, #2b2c30 0%, #1c1d20 40%, #26272b 60%, #17181b 100%);
+}
+
+.camera-bump{
+  position: absolute;
+  top: 26px;
+  left: 24px;
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #35363a, #19191c);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+}
+
+/* --------------------------------------------------------------------------
+   LEFT / RIGHT SPINES — thin metallic edges
+
+   IMPORTANT 3D-MATH NOTE: every face must rotate around the SAME pivot
+   point (the box's shared center) or it swings out into a long stray line
+   once translateZ pushes it away from the origin. The front/back faces
+   are W×H sized at top:0;left:0, so their natural center already sits at
+   (W/2, H/2). These side faces are narrower/shorter than that, so we
+   explicitly offset them with left/top so their own center lines up with
+   that exact same (W/2, H/2) point before any rotation happens.
+   -------------------------------------------------------------------------- */
+.face-left,
+.face-right{
+  width: var(--phone-depth);
+  height: calc(var(--phone-h) - 2 * var(--radius)); /* stop short of the rounded corners */
+  top: var(--radius);                                /* recenter now that height is shorter */
+  left: calc((var(--phone-w) - var(--phone-depth)) / 2); /* center on shared pivot */
+  background: var(--chassis-black);
+}
+.face-left{  transform: rotateY(-90deg) translateZ(calc(var(--phone-w) / 2)); }
+.face-right{ transform: rotateY(90deg)  translateZ(calc(var(--phone-w) / 2)); }
+
+/* --------------------------------------------------------------------------
+   TOP / BOTTOM SPINES — same centering rule as the left/right spines above
+   -------------------------------------------------------------------------- */
+.face-top,
+.face-bottom{
+  width: calc(var(--phone-w) - 2 * var(--radius)); /* stop short of the rounded corners */
+  height: var(--phone-depth);
+  left: var(--radius);                              /* recenter now that width is shorter */
+  top: calc((var(--phone-h) - var(--phone-depth)) / 2); /* center on shared pivot */
+  background: var(--chassis-black);
+}
+.face-top{    transform: rotateX(90deg)  translateZ(calc(var(--phone-h) / 2)); }
+.face-bottom{ transform: rotateX(-90deg) translateZ(calc(var(--phone-h) / 2)); }
+
+/* --------------------------------------------------------------------------
+   Responsive scaling — shrink the whole scene on small viewports
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px){
+  .scene{ transform: scale(0.62); }
+}
+@media (min-width: 601px) and (max-width: 900px){
+  .scene{ transform: scale(0.85); }
+}
+
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- flat grounding shadow, not part of the 3D box -->
+  <div class="floor-shadow"></div>
+
+  <!-- the real 3D box: 6 faces sharing one preserve-3d space -->
+  <div class="phone-3d">
+
+    <!-- FRONT: rim > bezel > screen > dynamic island > embed viewport -->
+    <div class="face face-front">
+      <div class="bezel">
+        <div class="screen">
+
+          <div class="camera-notch"></div>
+
+          <!-- ================================================================
+               INJECT YOUR CUSTOM UX/UI HERE.
+               This container is a flat, clipped, absolutely-positioned
+               viewport perfectly matched to the screen cut-out.
+               Swap the placeholder div below for your own markup, or use:
+               <iframe src="https://your-app-url.com" style="width:100%;height:100%;border:0;"></iframe>
+               ================================================================ -->
+          <div id="ux-embed-container">
+            <div class="placeholder-content">
+              Replace this div's contents<br>with your custom UI —<br>this container is the live screen viewport.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div class="face face-back">
+      <div class="camera-bump"></div>
+    </div>
+
+    <!-- LEFT SPINE (clean metal edge, no hardware buttons) -->
+    <div class="face face-left"></div>
+
+    <!-- RIGHT SPINE (clean metal edge, no hardware buttons) -->
+    <div class="face face-right"></div>
+
+    <!-- TOP / BOTTOM SPINES -->
+    <div class="face face-top"></div>
+    <div class="face face-bottom"></div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+/* ==========================================================================
+   COMPONENT STYLES: feature-protect
+   --------------------------------------------------------------------------
+   Two-column feature: model-2 phone (with illustration) on the left, copy on
+   the right. Matches the elegant, creamy-white, Times New Roman voice of the
+   hero. Stacks to a single centred column on small screens (phone on top).
+   ========================================================================== */
+
+.feature {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-7) var(--space-6);
+  background: var(--bg-scene);
+}
+
+.feature__inner {
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* ---- Left column: the illustration ---- */
+.feature__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.feature__illustration {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ---- Right column: copy ---- */
+.feature__copy {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.feature__headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.06;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
+}
+.feature__subtext {
+  margin-top: var(--space-5);
+  max-width: 52ch;
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+/* ---- Responsive: stack into one centred column (phone on top) ---- */
+@media (max-width: 900px) {
+  .feature__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--space-4);
+  }
+  .feature__media { order: 1; }
+  .feature__copy {
+    order: 2;
+    text-align: center;
+    align-items: center;
+  }
+  .feature__subtext { margin-inline: auto; }
+}

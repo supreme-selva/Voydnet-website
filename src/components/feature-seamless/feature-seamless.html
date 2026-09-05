@@ -1,0 +1,46 @@
+<!-- ==========================================================================
+     COMPONENT: feature-seamless  (fourth section of the site)
+     --------------------------------------------------------------------------
+     A three-column feature block on the creamy-white page:
+
+       LEFT   — the main headline + supporting copy.
+       CENTER — the "unrestricted internet" illustration, absolutely centred.
+       RIGHT  — a hover-reveal accordion of three points. Only the sub-heads
+                show by default; hovering a sub-head expands its body, and it
+                collapses again when the mouse leaves. One at a time.
+
+     Copy is referenced by key (data-i18n) and filled from the content
+     registry at runtime. The illustration src is set by the controller.
+     ========================================================================== -->
+<section class="fseam" data-component="feature-seamless">
+  <div class="fseam__inner">
+
+    <!-- LEFT: main copy -->
+    <div class="fseam__copy">
+      <h2 class="fseam__headline" data-i18n="seamless.headline"></h2>
+      <p class="fseam__subtext" data-i18n="seamless.subtext"></p>
+    </div>
+
+    <!-- CENTER: absolutely-centred illustration -->
+    <div class="fseam__media">
+      <img class="fseam__illustration" data-slot="illustration" alt="" />
+    </div>
+
+    <!-- RIGHT: hover-reveal accordion (one body visible at a time) -->
+    <ul class="fseam__list" data-slot="list">
+      <li class="fseam__item">
+        <h3 class="fseam__item-title" data-i18n="seamless.item1.title"></h3>
+        <div class="fseam__item-body"><p data-i18n="seamless.item1.body"></p></div>
+      </li>
+      <li class="fseam__item">
+        <h3 class="fseam__item-title" data-i18n="seamless.item2.title"></h3>
+        <div class="fseam__item-body"><p data-i18n="seamless.item2.body"></p></div>
+      </li>
+      <li class="fseam__item">
+        <h3 class="fseam__item-title" data-i18n="seamless.item3.title"></h3>
+        <div class="fseam__item-body"><p data-i18n="seamless.item3.body"></p></div>
+      </li>
+    </ul>
+
+  </div>
+</section>

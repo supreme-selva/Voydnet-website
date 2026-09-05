@@ -1,0 +1,93 @@
+/* ==========================================================================
+   COMPONENT STYLES: feature-transparency
+   --------------------------------------------------------------------------
+   Two-column feature: a layered pair of model-3 phones on the left, copy on
+   the right. Matches the elegant, creamy-white, Times New Roman voice of the
+   other sections. Stacks to a single centred column on small screens.
+   ========================================================================== */
+
+.ftrans {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-7) var(--space-6);
+  background: var(--bg-scene);
+}
+
+.ftrans__inner {
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* ---- Left column: the layered phone cluster ---- */
+.ftrans__media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 520px;
+}
+
+/* Each phone is absolutely placed so they overlap into a layered cluster. */
+.ftrans__phone {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Back phase — higher and to the left, slightly behind. */
+.ftrans__phone--back {
+  z-index: 1;
+  transform: translate(-24%, -8%);
+}
+/* Front phone — lower and to the right, in front. */
+.ftrans__phone--front {
+  z-index: 2;
+  transform: translate(24%, 10%);
+}
+
+/* ---- Right column: copy ---- */
+.ftrans__copy {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ftrans__headline {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.06;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
+}
+.ftrans__subtext {
+  margin-top: var(--space-5);
+  max-width: 52ch;
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+/* ---- Responsive: stack into one centred column (phones on top) ---- */
+@media (max-width: 900px) {
+  .ftrans__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: var(--space-5);
+  }
+  .ftrans__media { order: 1; width: 100%; }
+  .ftrans__copy {
+    order: 2;
+    text-align: center;
+    align-items: center;
+  }
+  .ftrans__subtext { margin-inline: auto; }
+}

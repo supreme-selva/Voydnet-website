@@ -1,0 +1,31 @@
+<!-- ==========================================================================
+     COMPONENT: feature-transparency  (third section of the site)
+     --------------------------------------------------------------------------
+     A two-column feature block on the creamy-white page:
+
+       LEFT  — a pair of model-3 3D phones, each showing one of the two
+               "absolute transparency" illustrations, arranged as a layered
+               cluster for depth.
+       RIGHT — the headline + supporting copy.
+
+     Copy is referenced by key (data-i18n) and filled from the content
+     registry at runtime. The two phones are mounted into their slots by the
+     controller, and each illustration is placed into its screen via embed-view.
+     ========================================================================== -->
+<section class="ftrans" data-component="feature-transparency">
+  <div class="ftrans__inner">
+
+    <!-- LEFT: two layered model-3 phones -->
+    <div class="ftrans__media">
+      <div class="ftrans__phone ftrans__phone--back"  data-slot="device-1"></div>
+      <div class="ftrans__phone ftrans__phone--front" data-slot="device-2"></div>
+    </div>
+
+    <!-- RIGHT: copy -->
+    <div class="ftrans__copy">
+      <h2 class="ftrans__headline" data-i18n="transparency.headline"></h2>
+      <p class="ftrans__subtext" data-i18n="transparency.subtext"></p>
+    </div>
+
+  </div>
+</section>

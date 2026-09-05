@@ -1,0 +1,44 @@
+/* ==========================================================================
+   LAYOUT  —  structural scaffolding (ITCSS "objects" layer)
+   --------------------------------------------------------------------------
+   Reusable, content-agnostic layout primitives. These describe *shape and
+   arrangement*, never look-and-feel (that belongs to components). The app
+   shell, the centered stage, and the page mount live here.
+   ========================================================================== */
+
+/* App shell: at least full height, but grows with content (scrollable). */
+.app-shell {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+}
+
+/* The router mounts the active page's markup inside this outlet. */
+.route-outlet {
+  display: block;
+  width: 100%;
+}
+
+/* A centered stage — fills at least the viewport and centres its content. */
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Simple horizontally centered content column. */
+.container {
+  width: min(100% - 2 * var(--space-5), var(--container-max));
+  margin-inline: auto;
+}
+
+/* Absolutely-centered helper. */
+.center-abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
