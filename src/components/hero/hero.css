@@ -72,24 +72,25 @@
   min-width: 0;         /* let the phone scale down inside the grid cell */
 }
 
-/* Dramatic entrance: the phone sweeps in from far off the right edge with a
-   springy settle — more attention-seeking than the standard reveal offset.
-   Wired to the shared motion engine: .is-revealed is added by core/motion.js
-   the moment the hero enters view. Gated on .has-motion so it never hides the
-   phone if JS is off, and disabled under reduced-motion. */
-.has-motion .hero__stage--enter[data-reveal="right"] {
+/* Entrance: once the site loads, the illustration pops up smoothly from its
+   baseline — it starts tucked below, slightly small and soft, then rises into
+   place (bottom → top) with a gentle springy settle. Wired to the shared
+   motion engine: .is-revealed is added by core/motion.js the moment the hero
+   enters view. Gated on .has-motion so the image is never hidden if JS is off,
+   and disabled under reduced-motion. */
+.has-motion .hero__stage--rise[data-reveal="up"] {
   opacity: 0;
-  transform: translate3d(140px, 0, 0) scale(0.92);
+  transform: translate3d(0, 64px, 0) scale(0.96);
   transition:
-    opacity 1100ms var(--ease-out-soft),
-    transform 1100ms var(--ease-spring);
+    opacity 900ms var(--ease-out-soft),
+    transform 1200ms var(--ease-spring);
 }
-.has-motion .hero__stage--enter[data-reveal="right"].is-revealed {
+.has-motion .hero__stage--rise[data-reveal="up"].is-revealed {
   opacity: 1;
   transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .has-motion .hero__stage--enter[data-reveal="right"] {
+  .has-motion .hero__stage--rise[data-reveal="up"] {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -123,38 +124,32 @@
   to   { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
 }
 
-.hero__device {
+.hero__image {
   position: relative;
-  z-index: 2;                    /* the phone floats above the glow */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
+  z-index: 2;                    /* the illustration floats above the glow */
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin-inline: auto;
+  /* A soft, cool shadow grounds the floating illustration on white. */
+  filter: drop-shadow(0 24px 32px rgba(20, 26, 40, 0.16));
 }
 
-/* A soft, cool elliptical floor shadow grounds the floating device on white. */
-.hero__device::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 50%;
-  bottom: 6%;
-  width: 52%;
-  height: 26px;
-  transform: translateX(-50%);
-  background: radial-gradient(50% 50% at 50% 50%,
-    rgba(20, 26, 40, 0.16) 0%, rgba(20, 26, 40, 0) 72%);
-  filter: blur(6px);
-  pointer-events: none;
-  animation: hero-shadow 3.2s cubic-bezier(0.45, 0, 0.35, 1) infinite;
+/* After the entrance settles, the image breathes with a slow, gentle float so
+   the scene stays alive. Only kicks in once the stage has revealed, so it
+   never fights the rise-up entrance transform (which lives on the stage). */
+.has-motion .hero__stage--rise.is-revealed .hero__image {
+  animation: hero-image-float 6s ease-in-out 1200ms infinite alternate;
 }
-
-/* Shadow tightens as the phone rises, spreads as it settles — synced feel
-   with the device's own float (pm1-float, 3.2s). */
-@keyframes hero-shadow {
-  0%   { transform: translateX(-50%) scale(1);    opacity: 0.9; }
-  50%  { transform: translateX(-50%) scale(0.82); opacity: 0.55; }
-  100% { transform: translateX(-50%) scale(1);    opacity: 0.9; }
+@keyframes hero-image-float {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, -12px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .has-motion .hero__stage--rise.is-revealed .hero__image {
+    animation: none;
+  }
 }
 
 /* ---- Responsive: stack into one centred column ---- */
@@ -173,12 +168,26 @@
     order: 1;
   }
   .hero__subtext { margin-inline: auto; }
-  .hero__stage { order: 2; width: 100%; }
 
-  /* Softer, vertical entrance on stacked layouts so the phone never slides in
-     from beyond the right edge and causes horizontal overflow on phones. */
-  .has-motion .hero__stage--enter[data-reveal="right"] {
-    transform: translate3d(0, 40px, 0) scale(0.96);
+  /* Pull the CTA closer to the copy so the image doesn't sit far below it. */
+  .hero__cta { margin-top: var(--space-6); }
+
+  .hero__stage {
+    order: 2;
+    width: 100%;
+    /* Cap the stacked image so the illustration + its glow stay compact and
+       centred instead of leaving a tall void above the phone. */
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  /* Shrink the glow on mobile so its large radial bloom doesn't read as empty
+     space above the phone. */
+  .hero__glow { width: 96%; }
+
+  /* Gentler rise on stacked layouts so the lift never feels heavy on phones. */
+  .has-motion .hero__stage--rise[data-reveal="up"] {
+    transform: translate3d(0, 44px, 0) scale(0.97);
   }
 }
 

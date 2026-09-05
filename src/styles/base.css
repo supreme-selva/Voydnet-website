@@ -15,6 +15,11 @@
 html,
 body {
   height: 100%;
+  /* Clip horizontal overflow on BOTH the viewport (html) and body. Setting it
+     on body alone doesn't stop the page scrolling sideways, since html is the
+     real scroll container — decorative bleed (e.g. the hero glow) or entrance
+     transforms would otherwise widen the scrollable area on mobile. */
+  overflow-x: hidden;
 }
 
 body {
@@ -24,7 +29,6 @@ body {
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;               /* allow vertical scroll for content */
 }
 
 img,

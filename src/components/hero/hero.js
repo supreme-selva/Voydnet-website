@@ -15,8 +15,6 @@
 
 import { createButton } from "../button/button.js";
 import { t, hydrate } from "../../content/strings.js";
-import { mountPhoneMockup } from "../phone-mockup/phone-mockup.js";
-import { mount as mountEmbed } from "../embed-view/embed-view.js";
 import { ASSETS } from "../../config/assets.js";
 import { revealLines } from "../../core/motion.js";
 
@@ -57,29 +55,16 @@ export async function mount(root, props = {}) {
   });
   if (ctaHost) ctaHost.appendChild(primary);
 
-  // 3) Mount the floating model-1 phone on the right, backdrop-free, and
-  //    loop the demo video inside its screen.
-  const deviceHost = root.querySelector('[data-slot="device"]');
-  let phone = null;
-  let embed = null;
-  if (deviceHost) {
-    phone = await mountPhoneMockup(deviceHost, { model: "model-1" });
-    if (phone.screenSlot) {
-      embed = mountEmbed(phone.screenSlot, {
-        kind: "video",
-        src: ASSETS.demoVideo,
-        autoplay: true,
-        loop: true,
-        muted: true,
-        title: "Voydnet app demo",
-      });
-    }
+  // 3) Point the intro illustration at the registered asset.
+  const img = root.querySelector('[data-slot="image"]');
+  if (img) {
+    img.src = ASSETS.heroIntro;
+    img.alt = t("hero.headline", "Pure internet. Zero noise.");
   }
 
   return {
     destroy() {
-      if (embed) embed.destroy();
-      if (phone) phone.destroy();
+      /* Nothing persistent to tear down. */
     },
   };
 }

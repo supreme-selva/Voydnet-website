@@ -22,13 +22,13 @@
       <div class="hero__cta" data-reveal="up" style="--reveal-index:4" data-slot="cta"></div>
     </div>
 
-    <!-- RIGHT: the floating 3D phone (model-1) playing the demo video.
-         The irregular black backdrop hugs the phone's lower body while the
-         phone's TOP juts out above it, selling the 3D depth. The phone model
-         is mounted into [data-slot="device"] at runtime by hero.js. -->
-    <div class="hero__stage hero__stage--enter" data-reveal="right" style="--reveal-index:2">
+    <!-- RIGHT: the intro illustration. On load it pops up smoothly from its
+         baseline (bottom → top), then breathes with a gentle float. The image
+         source is set at runtime by hero.js from the asset registry
+         (data-slot="image"). -->
+    <div class="hero__stage hero__stage--rise" data-reveal="up" style="--reveal-index:2">
       <div class="hero__glow" aria-hidden="true"></div>
-      <div class="hero__device" data-slot="device"></div>
+      <img class="hero__image" data-slot="image" alt="" />
     </div>
 
   </div>
