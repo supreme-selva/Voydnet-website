@@ -1,0 +1,27 @@
+# ==========================================================================
+# .assetsignore — files EXCLUDED from the Cloudflare Workers asset upload
+# --------------------------------------------------------------------------
+# The build uses Output Directory "." (the repo root), so without this file
+# Wrangler tries to upload the ENTIRE repo as static assets — including the
+# .git history, whose pack file is ~49 MiB and exceeds Cloudflare's 25 MiB
+# per-asset limit. These entries keep repo/dev files out of the deploy so only
+# the actual website is served.
+# ==========================================================================
+
+# Version control history (the cause of the "Asset too large" error).
+.git
+.git/**
+
+# Repo / config files that are not part of the served site.
+.gitignore
+.nojekyll
+README.md
+_redirects
+.assetsignore
+wrangler.jsonc
+wrangler.toml
+node_modules
+
+# Local docs / reference material (not part of the live site).
+docs
+docs/**
