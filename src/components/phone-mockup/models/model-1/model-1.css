@@ -13,18 +13,21 @@
 .pm--model-1 {
   --pm-w: 300px;
   --pm-h: 657px;
-  --pm-depth: 15px;
+  --pm-depth: 40px;   /* bold iPhone-like thickness */
   --pm-radius: 52px;
   --pm-rim: 0px;
   --pm-bezel: 4px;
-  --pm-rot-x: -10deg;
-  --pm-rot-y: -32deg;
-  --pm-rot-z: -3deg;
+  /* Turned more toward the viewer (less side-on) so the screen + demo video
+     read clearly, with a gentle tilt that still keeps a sense of 3D depth. */
+  --pm-rot-x: -6deg;
+  --pm-rot-y: -18deg;
+  --pm-rot-z: -2deg;
 
   /* Overall size knob. Change --pm-scale (or override it from the host) to
      resize the whole device without touching the internal geometry, so the
-     video's screen ratio stays exact. 1 = native, 0.66 ≈ two-thirds size. */
-  --pm-scale: 0.66;
+     video's screen ratio stays exact. 1 = native. Bumped up to fill the hero's
+     right column so it no longer feels empty. */
+  --pm-scale: 0.82;
 
   position: relative;
   /* The outer box hugs the SCALED device (plus a little rotation headroom),
@@ -51,16 +54,8 @@
   height: var(--pm-h);
   transform-style: preserve-3d;
   transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z));
-  /* A pronounced, clearly visible bounce: bigger travel + a bouncy ease that
-     rises high and settles down with a little spring. */
-  animation: pm1-float 3.2s cubic-bezier(0.45, 0, 0.35, 1) infinite;
+  /* No float animation — the device rests statically at its posed angle. */
   z-index: var(--z-device);
-}
-@keyframes pm1-float {
-  /* Rise up (peak) at the midpoint, drop back down at the ends. Range ≈ 40px. */
-  0%   { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(16px); }
-  50%  { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(-24px); }
-  100% { transform: scale(var(--pm-scale)) rotateX(var(--pm-rot-x)) rotateY(var(--pm-rot-y)) rotateZ(var(--pm-rot-z)) translateY(16px); }
 }
 
 .pm--model-1 .pm__face { position: absolute; top: 0; left: 0; }
@@ -152,9 +147,15 @@
 .pm--model-1 .pm__face--top    { transform: rotateX(90deg)  translateZ(calc(var(--pm-h) / 2)); }
 .pm--model-1 .pm__face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--pm-h) / 2)); }
 
-@media (max-width: 600px) {
-  .pm--model-1 { transform: scale(0.62); }
-}
+/* Responsive sizing uses the intended --pm-scale knob (not a wrapper
+   transform) so the reserved footprint shrinks with the device and the video's
+   screen ratio stays exact. */
 @media (min-width: 601px) and (max-width: 900px) {
-  .pm--model-1 { transform: scale(0.85); }
+  .pm--model-1 { --pm-scale: 0.7; }
+}
+@media (max-width: 600px) {
+  .pm--model-1 { --pm-scale: 0.62; }
+}
+@media (max-width: 420px) {
+  .pm--model-1 { --pm-scale: 0.54; }
 }

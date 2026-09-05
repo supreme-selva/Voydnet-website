@@ -1,0 +1,17 @@
+<!-- ==========================================================================
+     COMPONENT: site-nav  (sticky page header)
+     --------------------------------------------------------------------------
+     A quiet, sticky top bar that anchors the whole page — the pattern every
+     best-in-class product site uses so the visitor never feels adrift. The
+     brand wordmark sits left; the primary "Get Voydnet" action sits right,
+     built by the shared button factory and injected into [data-slot="cta"].
+
+     The bar is transparent over the hero and grows a hairline + soft shadow
+     once the page is scrolled (the controller toggles .is-scrolled).
+     ========================================================================== -->
+<header class="site-nav" data-component="site-nav" data-slot="root">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="#/" data-i18n="brand.name">Voydnet</a>
+    <div class="site-nav__actions" data-slot="cta"></div>
+  </div>
+</header>

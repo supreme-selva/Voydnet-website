@@ -24,13 +24,30 @@ const ICON_DOWNLOAD = `
     <path d="M5 21h14"></path>
   </svg>`;
 
+/* Breakpoint below which this is a "mobile" layout. Kept in sync with the
+   final-cta.css @media (max-width: 760px) rule that stacks the section. */
+const MOBILE_MQ = "(max-width: 760px)";
+
 export function mount(root, props = {}) {
   // 1) Fill copy.
   hydrate(root);
 
-  // 2) Wire and start both videos.
-  const birds = root.querySelector('[data-slot="birds"]');
+  // 2) Wire the videos.
+  //    On mobile the wide "birds" background adds little and costs bandwidth,
+  //    so we DROP it entirely — remove it from the DOM and never set its src,
+  //    so the file is never even downloaded. The phone ("mobile") video is the
+  //    one that matters on small screens, so it always plays. This is real
+  //    logic, not just visual hiding.
+  const isMobile = window.matchMedia(MOBILE_MQ).matches;
+
+  let birds = root.querySelector('[data-slot="birds"]');
   const mobile = root.querySelector('[data-slot="mobile"]');
+
+  if (isMobile && birds) {
+    birds.remove();   // never load the birds video on phones
+    birds = null;
+  }
+
   const videos = [birds, mobile].filter(Boolean);
 
   videos.forEach((v) => {

@@ -19,6 +19,7 @@
 @import "./layout.css";
 
 /* ---- Component stylesheets (colocated with their component folder) ------ */
+@import "../components/site-nav/site-nav.css";
 @import "../components/hero/hero.css";
 @import "../components/feature-protect/feature-protect.css";
 @import "../components/feature-transparency/feature-transparency.css";
@@ -28,7 +29,6 @@
 /* phone-mockup is a family of interchangeable models; import each model. */
 @import "../components/phone-mockup/models/model-1/model-1.css";
 @import "../components/phone-mockup/models/model-2/model-2.css";
-@import "../components/phone-mockup/models/model-3/model-3.css";
 @import "../components/phone-mockup/models/model-3/model-3.css";
 @import "../components/embed-view/embed-view.css";
 @import "../components/button/button.css";

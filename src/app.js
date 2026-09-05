@@ -23,6 +23,13 @@ function boot() {
     return;
   }
 
+  // Progressive-enhancement flag: JS is running, so the scroll-reveal engine
+  // (src/core/motion.js) will manage entrance animations. Setting this on the
+  // root BEFORE the first render means reveal targets are already in their
+  // hidden start-state on first paint — no flash of un-animated content. If
+  // this line never runs (JS disabled/failed), nothing is ever hidden.
+  document.documentElement.classList.add("has-motion");
+
   const router = createRouter({ outlet, routes, fallback: "/" });
   router.start();
 

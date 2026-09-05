@@ -42,3 +42,22 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* ---- Section object --------------------------------------------------------
+   A content-sized band with the standard vertical rhythm. Sections describe
+   their own arrangement inside; this only governs the cadence and page inset,
+   replacing the old habit of stretching every band to 100vh. */
+.section {
+  position: relative;
+  width: 100%;
+  padding-block: var(--section-pad-y);
+  padding-inline: var(--section-inset);
+  display: flex;
+  justify-content: center;
+}
+
+/* Centered content column shared by sections. */
+.section__inner {
+  width: min(100%, var(--container-max));
+  margin-inline: auto;
+}

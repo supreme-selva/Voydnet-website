@@ -1,28 +1,32 @@
 /* ==========================================================================
    COMPONENT STYLES: hero
    --------------------------------------------------------------------------
-   Clean, elegant, creamy-white. A two-column hero: copy + CTA on the left,
-   a floating 3D phone (model-1) playing the demo video on the right. The
-   phone sits on the page with NO backdrop of its own — only the device
-   floats over the cream. Stacks to a single centred column on small screens.
+   Clean, elegant, pure white. A two-column hero: copy + CTA on the left, a
+   floating 3D phone (model-1) playing the demo video on the right. The only
+   thing behind the phone is a dreamy, slowly-breathing glow halo plus a soft
+   floor shadow that grounds the device on white. Stacks to a single centred
+   column on small screens.
    ========================================================================== */
 
 .hero {
-  min-height: 100vh;
+  /* Sized to its content with a comfortable rhythm — no forced full-viewport
+     height, which previously centred the short hero content and left a large
+     void beneath it before the next section. */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-7) var(--space-6);
+  padding-block: var(--section-pad-y-sm) var(--space-7);
+  padding-inline: var(--section-inset);
   background: var(--bg-scene);
 }
 
 .hero__inner {
-  width: min(100%, 1180px);
+  width: min(100%, var(--container-max));
   margin-inline: auto;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
-  gap: var(--space-6);
+  gap: clamp(var(--space-5), 4vw, var(--space-8));
 }
 
 /* ---- Left column: copy ---- */
@@ -59,7 +63,7 @@
   display: flex;
 }
 
-/* ---- Right column: the floating 3D phone over an irregular black shape ---- */
+/* ---- Right column: the floating 3D phone over a dreamy soft glow ---- */
 .hero__stage {
   position: relative;
   display: flex;
@@ -68,53 +72,100 @@
   min-width: 0;         /* let the phone scale down inside the grid cell */
 }
 
-/* Irregular black backdrop. It sits BEHIND the phone and is pushed down from
-   the top, so the phone's top edge juts out above it — a real sense of depth,
-   like the device is standing in front of / rising out of the black form.
-   The blobby, asymmetric border-radius keeps it organic rather than a slab. */
-.hero__backdrop {
+/* Dramatic entrance: the phone sweeps in from far off the right edge with a
+   springy settle — more attention-seeking than the standard reveal offset.
+   Wired to the shared motion engine: .is-revealed is added by core/motion.js
+   the moment the hero enters view. Gated on .has-motion so it never hides the
+   phone if JS is off, and disabled under reduced-motion. */
+.has-motion .hero__stage--enter[data-reveal="right"] {
+  opacity: 0;
+  transform: translate3d(140px, 0, 0) scale(0.92);
+  transition:
+    opacity 1100ms var(--ease-out-soft),
+    transform 1100ms var(--ease-spring);
+}
+.has-motion .hero__stage--enter[data-reveal="right"].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .has-motion .hero__stage--enter[data-reveal="right"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Dreamy glow halo — the ONLY thing behind the phone on the pure-white page.
+   A large, soft radial bloom with a whisper of brand teal at its heart,
+   fading to nothing. It breathes slowly so the scene feels alive without any
+   hard edges — pure minimalism with a touch of magic. */
+.hero__glow {
   position: absolute;
   z-index: 1;                    /* behind the device (device is z-index 2) */
   left: 50%;
-  /* Start well below the top so the phone head pokes out; extend past the
-     bottom so the phone appears anchored into the shape. */
-  top: 18%;
-  bottom: -4%;
-  width: 78%;
-  transform: translateX(-46%) rotate(-3deg);
-  /* Thick, warm cream — noticeably deeper than the page background so the
-     shape clearly reads as a raised panel the phone rises out of. */
+  top: 50%;
+  width: 118%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
   background:
-    radial-gradient(120% 95% at 50% 22%,
-      var(--cream-thick) 0%, var(--cream-thick-deep) 60%, #DCCFB2 100%);
-  border-radius: 46% 54% 40% 60% / 30% 34% 66% 70%;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),          /* soft top highlight */
-    0 30px 60px -28px rgba(120, 100, 60, 0.45);      /* warm grounding shadow */
-  animation: hero-blob 9s ease-in-out infinite alternate;
+    radial-gradient(circle at 50% 46%,
+      var(--glow-accent) 0%,
+      var(--glow-soft) 34%,
+      rgba(255, 255, 255, 0) 66%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: hero-breathe 7s ease-in-out infinite alternate;
 }
 
-/* Gentle organic morph so the shape feels alive but stays subtle. */
-@keyframes hero-blob {
-  from { border-radius: 46% 54% 40% 60% / 30% 34% 66% 70%; }
-  to   { border-radius: 52% 48% 46% 54% / 34% 40% 60% 66%; }
+/* Slow, gentle breathe — scale + opacity drift, nothing jarring. */
+@keyframes hero-breathe {
+  from { transform: translate(-50%, -50%) scale(0.94); opacity: 0.85; }
+  to   { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
 }
 
 .hero__device {
   position: relative;
-  z-index: 2;                    /* the phone floats above the black shape */
+  z-index: 2;                    /* the phone floats above the glow */
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
 }
 
+/* A soft, cool elliptical floor shadow grounds the floating device on white. */
+.hero__device::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: 6%;
+  width: 52%;
+  height: 26px;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%,
+    rgba(20, 26, 40, 0.16) 0%, rgba(20, 26, 40, 0) 72%);
+  filter: blur(6px);
+  pointer-events: none;
+  animation: hero-shadow 3.2s cubic-bezier(0.45, 0, 0.35, 1) infinite;
+}
+
+/* Shadow tightens as the phone rises, spreads as it settles — synced feel
+   with the device's own float (pm1-float, 3.2s). */
+@keyframes hero-shadow {
+  0%   { transform: translateX(-50%) scale(1);    opacity: 0.9; }
+  50%  { transform: translateX(-50%) scale(0.82); opacity: 0.55; }
+  100% { transform: translateX(-50%) scale(1);    opacity: 0.9; }
+}
+
 /* ---- Responsive: stack into one centred column ---- */
 @media (max-width: 900px) {
+  .hero {
+    padding-block: var(--space-6) var(--space-6);
+  }
   .hero__inner {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: var(--space-4);
+    gap: var(--space-5);
   }
   .hero__copy {
     text-align: center;
@@ -122,5 +173,17 @@
     order: 1;
   }
   .hero__subtext { margin-inline: auto; }
-  .hero__device { order: 2; }
+  .hero__stage { order: 2; width: 100%; }
+
+  /* Softer, vertical entrance on stacked layouts so the phone never slides in
+     from beyond the right edge and causes horizontal overflow on phones. */
+  .has-motion .hero__stage--enter[data-reveal="right"] {
+    transform: translate3d(0, 40px, 0) scale(0.96);
+  }
+}
+
+/* Small phones: tighten the headline + keep everything comfortably inset. */
+@media (max-width: 600px) {
+  .hero__headline { font-size: clamp(34px, 11vw, 52px); }
+  .hero__subtext  { font-size: clamp(15px, 4.2vw, 18px); }
 }

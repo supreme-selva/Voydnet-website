@@ -1,0 +1,67 @@
+/* ==========================================================================
+   COMPONENT STYLES: site-nav
+   --------------------------------------------------------------------------
+   Sticky, minimal header on the pure-white theme. Transparent while the hero
+   is in view; on scroll it earns a frosted white backing, a hairline rule and
+   a whisper of shadow so it reads as a distinct layer above the content.
+   ========================================================================== */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  width: 100%;
+  height: var(--nav-height);
+  display: flex;
+  align-items: flex-start;   /* wordmark hugs the very top */
+  /* Frosted-white backing, effectively invisible until scrolled. */
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: saturate(180%) blur(0px);
+  border-bottom: 1px solid transparent;
+  transition:
+    background var(--dur-base) var(--ease-standard),
+    backdrop-filter var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+/* Scrolled state: frosted glass + hairline + soft lift. */
+.site-nav.is-scrolled {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom-color: var(--color-line);
+  box-shadow: 0 1px 20px rgba(16, 18, 22, 0.05);
+}
+
+.site-nav__inner {
+  width: 100%;
+  /* No left inset so the wordmark reaches the far top-left corner; keep a
+     comfortable right inset for the CTA. Small top offset for breathing room. */
+  padding: var(--space-4) var(--section-inset) 0 var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* Brand wordmark — the site's Times New Roman voice, calm and confident. */
+.site-nav__brand {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+.site-nav__brand:hover { opacity: 0.7; }
+
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* On small screens, keep the bar breathing room but let the CTA shrink. */
+@media (max-width: 600px) {
+  .site-nav__brand { font-size: var(--text-lg); }
+}

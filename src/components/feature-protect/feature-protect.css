@@ -7,21 +7,23 @@
    ========================================================================== */
 
 .feature {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-7) var(--space-6);
+  /* Tighter top padding so this first feature sits close under the hero;
+     normal rhythm below it into the next section. */
+  padding-block: var(--space-7) var(--section-pad-y);
+  padding-inline: var(--section-inset);
   background: var(--bg-scene);
 }
 
 .feature__inner {
-  width: min(100%, 1180px);
+  width: min(100%, var(--container-max));
   margin-inline: auto;
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: var(--space-6);
+  gap: clamp(var(--space-5), 5vw, 96px);
 }
 
 /* ---- Left column: the illustration ---- */
@@ -33,9 +35,10 @@
 }
 .feature__illustration {
   width: 100%;
-  max-width: 520px;
+  max-width: 600px;
   height: auto;
   object-fit: contain;
+  filter: drop-shadow(0 30px 44px rgba(20, 26, 40, 0.12));
 }
 
 /* ---- Right column: copy ---- */

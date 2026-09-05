@@ -14,11 +14,11 @@
    ========================================================================== */
 
 .fseam {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-7) var(--space-6);
+  padding-block: var(--section-pad-y);
+  padding-inline: var(--section-inset);
   background: var(--bg-scene);
 }
 
@@ -27,9 +27,9 @@
   margin-inline: auto;
   display: grid;
   /* Narrower side text columns, a big center column for the illustration. */
-  grid-template-columns: 0.72fr 1.7fr 0.72fr;
+  grid-template-columns: 0.78fr 1.6fr 0.78fr;
   align-items: center;
-  gap: var(--space-4);
+  gap: clamp(var(--space-4), 2.5vw, var(--space-6));
 }
 
 /* ---- Left: main copy ---- */
@@ -72,8 +72,8 @@
   max-width: 900px;
   height: auto;
   object-fit: contain;
-  /* Soft grounded shadow gives depth; no motion. */
-  filter: drop-shadow(0 34px 46px rgba(60, 50, 30, 0.26));
+  /* Soft, cool grounded shadow gives depth on the pure-white page. */
+  filter: drop-shadow(0 34px 46px rgba(20, 26, 40, 0.18));
 }
 
 /* ---- Right: hover-reveal accordion ---- */

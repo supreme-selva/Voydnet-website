@@ -1,4 +1,6 @@
 # Cloudflare Pages SPA fallback.
-# We use hash routing, so the app lives at the root. Any unmatched path is
-# rewritten to index.html with a 200 so deep links never 404.
-/*    /index.html    200
+# This site uses HASH routing (#/, #/about), so every real request path is the
+# site root and is served by index.html automatically. We therefore do NOT need
+# a catch-all rewrite to /index.html — and that rule triggers Cloudflare's
+# "infinite loop" validation error (requesting /index.html re-matches /* while
+# its .html-stripping logic loops). Intentionally left with no rewrite rules.

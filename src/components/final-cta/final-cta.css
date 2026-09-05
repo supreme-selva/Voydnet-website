@@ -45,20 +45,8 @@
   pointer-events: none;
 }
 
-/* Gradient scrim (from the top-left) to keep the copy readable over video. */
-.fcta::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: linear-gradient(
-    to bottom right,
-    rgba(20, 18, 14, 0.58) 0%,
-    rgba(20, 18, 14, 0.28) 32%,
-    rgba(20, 18, 14, 0) 60%
-  );
-  pointer-events: none;
-}
+/* No scrim/overlay — the video's own light-gray background is the backdrop,
+   so the section shows the video as-is behind the black copy. */
 
 /* ---- LAYER 3: copy, TOP-LEFT, overlapping the birds layer ---- */
 .fcta__content {
@@ -71,7 +59,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: #fff;
+  color: var(--color-ink);
 }
 
 .fcta__headline {
@@ -80,8 +68,7 @@
   font-size: clamp(34px, 5.2vw, 66px);
   line-height: 1.05;
   letter-spacing: -0.5px;
-  color: #fff;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  color: var(--color-ink);
 }
 
 .fcta__subtext {
@@ -90,8 +77,7 @@
   font-family: var(--font-serif);
   font-size: clamp(16px, 1.6vw, 20px);
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+  color: var(--color-ink-soft);
 }
 
 .fcta__cta {
@@ -104,28 +90,79 @@
   margin-top: var(--space-3);
   font-family: var(--font-serif);
   font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.82);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+  color: var(--color-ink-soft);
 }
 
-/* On the dark video, the CTA button reads best as cream-on-ink or a light
-   pill. Give the primary button here a light treatment. */
+/* Black pill button (default primary: ink background, white label), matching
+   the black copy and the pure-white theme. */
 .fcta__cta .btn--primary {
-  --btn-bg: #fff;
-  --btn-fg: var(--color-ink);
-  --btn-bg-hover: #f1ece3;
+  --btn-bg: var(--color-ink);
+  --btn-fg: #fff;
+  --btn-bg-hover: #000;
 }
 
-/* ---- Responsive: on narrow screens keep text top-left, move the phone
-   lower-right so they don't collide. ---- */
+/* ==========================================================================
+   RESPONSIVE
+   --------------------------------------------------------------------------
+   On phones the full-bleed video + overlapping copy gets cramped, so we drop
+   the absolute layering entirely and switch to a natural STACKED flow:
+
+     1) the copy sits at the top on the plain page background (text can grow
+        and "bump out" as needed — it never fights the video),
+     2) the birds video shrinks into a contained band beneath the copy,
+     3) the mobile video sits centred inside that band.
+
+   Section height becomes content-driven (min-height: auto) so nothing is
+   forced to a full viewport and there is no empty overlap.
+   ========================================================================== */
 @media (max-width: 760px) {
-  .fcta__mobile {
-    width: min(58%, 300px);
-    top: auto;
-    bottom: clamp(24px, 6vh, 60px);
-    transform: none;
+  .fcta {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-scene);
+    padding-block: var(--section-pad-y-sm);
   }
+
+  /* Copy first, in normal flow, on the page background — free to grow. */
   .fcta__content {
-    max-width: min(88%, 480px);
+    position: static;
+    z-index: 4;
+    order: 1;
+    max-width: 100%;
+    padding-inline: var(--section-inset);
+    align-items: flex-start;
+    text-align: left;
   }
+  .fcta__subtext { max-width: 100%; }
+
+  /* Birds background video is dropped on mobile (removed from the DOM by the
+     controller). This is a CSS safety net in case the viewport is resized down
+     after load, before a reload. */
+  .fcta__birds {
+    display: none;
+  }
+
+  /* Mobile (phone) video: shown WHOLE (never cropped) at a reduced size,
+     stacked under the copy in normal flow. */
+  .fcta__mobile {
+    position: relative;
+    inset: auto;
+    order: 2;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    width: min(64%, 260px);
+    height: auto;                 /* natural aspect ratio — no crop */
+    margin-inline: auto;
+    margin-top: var(--space-6);
+    object-fit: contain;
+  }
+}
+
+/* Very small phones: shrink the phone video a little further. */
+@media (max-width: 420px) {
+  .fcta__mobile { width: min(72%, 220px); }
 }

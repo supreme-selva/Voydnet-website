@@ -7,22 +7,22 @@
    ========================================================================== */
 
 .flocal {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-7) var(--space-6);
+  padding-block: var(--section-pad-y);
+  padding-inline: var(--section-inset);
   background: var(--bg-scene);
 }
 
 .flocal__inner {
-  width: min(100%, 1320px);
+  width: min(100%, var(--container-max));
   margin-inline: auto;
   display: grid;
   /* Wider image column, narrower copy column. */
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   align-items: center;
-  gap: var(--space-5);
+  gap: clamp(var(--space-5), 5vw, 88px);
 }
 
 /* ---- Left: illustration ---- */
@@ -41,8 +41,8 @@
   max-width: 720px;
   height: auto;
   object-fit: contain;
-  /* Soft grounded shadow for depth. */
-  filter: drop-shadow(0 30px 44px rgba(60, 50, 30, 0.26));
+  /* Soft, cool grounded shadow for depth on the pure-white page. */
+  filter: drop-shadow(0 30px 44px rgba(20, 26, 40, 0.18));
 }
 
 /* ---- Right: copy ---- */

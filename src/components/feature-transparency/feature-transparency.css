@@ -7,21 +7,21 @@
    ========================================================================== */
 
 .ftrans {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-7) var(--space-6);
+  padding-block: var(--section-pad-y);
+  padding-inline: var(--section-inset);
   background: var(--bg-scene);
 }
 
 .ftrans__inner {
-  width: min(100%, 1180px);
+  width: min(100%, var(--container-max));
   margin-inline: auto;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: var(--space-6);
+  gap: clamp(var(--space-5), 5vw, 96px);
 }
 
 /* ---- Left column: the layered phone cluster ---- */
@@ -31,7 +31,7 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
-  min-height: 520px;
+  min-height: clamp(420px, 46vw, 560px);
 }
 
 /* Each phone is absolutely placed so they overlap into a layered cluster. */

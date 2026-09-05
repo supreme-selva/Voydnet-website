@@ -18,6 +18,7 @@ import { t, hydrate } from "../../content/strings.js";
 import { mountPhoneMockup } from "../phone-mockup/phone-mockup.js";
 import { mount as mountEmbed } from "../embed-view/embed-view.js";
 import { ASSETS } from "../../config/assets.js";
+import { revealLines } from "../../core/motion.js";
 
 /* Inline download glyph for the CTA (stroke inherits button colour). */
 const ICON_DOWNLOAD = `
@@ -37,6 +38,11 @@ const ICON_DOWNLOAD = `
 export async function mount(root, props = {}) {
   // 1) Fill copy from the content registry.
   hydrate(root);
+
+  // 1b) Split the headline's <br>-separated lines into individual reveal
+  //     targets so it rises line-by-line on load. The scroll engine
+  //     (core/motion.js) picks up the [data-reveal] spans this produces.
+  revealLines(root.querySelector(".hero__headline"));
 
   // 2) Build + mount the primary CTA.
   const ctaHost = root.querySelector('[data-slot="cta"]');

@@ -17,11 +17,11 @@
 
   /* ---- Neutrals --------------------------------------------------------- */
   --color-ink:              #0A0A0A;
-  --color-ink-soft:         #4a4f57;
+  --color-ink-soft:         #52585f;
   --color-muted:            #9aa3ab;
-  --color-line:             #e2e5ea;
+  --color-line:             #ececf0;
   --color-surface:          #ffffff;
-  --color-surface-alt:      #f5f0ee;
+  --color-surface-alt:      #f7f8fa;
 
   /* ---- Device / chassis materials -------------------------------------- */
   --chassis-black:          #1b1c1f;
@@ -30,18 +30,23 @@
   --metal-dark:             #8b8f96;
   --screen-white:           #ffffff;
 
-  /* ---- Creamy-white surfaces ------------------------------------------- */
-  --cream:                  #FBF8F2;   /* primary creamy-white backdrop */
-  --cream-soft:             #F4EFE6;   /* slightly deeper cream         */
-  --cream-line:             #E7E0D3;   /* hairline dividers on cream    */
-  /* A thick, warm cream for raised surfaces — clearly deeper than the page
-     background so shapes read as distinct panels sitting on the page. */
-  --cream-thick:            #EFE7D6;
-  --cream-thick-deep:       #e2e3dd5c;
+  /* ---- Neutral "surface" tokens (formerly the creamy palette) -----------
+     The site theme is now PURE WHITE. These tokens keep their old names so
+     every component that references them restyles automatically — they now
+     resolve to white and whisper-light neutral greys instead of cream. */
+  --cream:                  #ffffff;   /* primary surface = pure white     */
+  --cream-soft:             #f6f7f9;   /* faint grey card fill             */
+  --cream-line:             #ececf0;   /* hairline dividers                */
+  --cream-thick:            #f3f4f6;   /* softly raised neutral panel      */
+  --cream-thick-deep:       rgba(15, 20, 30, 0.04);
+
+  /* ---- Dreamy accent glow (used sparingly for the "magic" moments) ------ */
+  --glow-accent:            rgba(35, 139, 129, 0.14);  /* soft teal halo   */
+  --glow-soft:              rgba(20, 26, 38, 0.06);     /* neutral halo     */
 
   /* ---- Page backdrop ---------------------------------------------------- */
-  /* A soft, elegant creamy wash — barely-there vertical warmth. */
-  --bg-scene: linear-gradient(180deg, #FDFBF6 0%, var(--cream) 55%, #F6F1E8 100%);
+  /* Light-gray canvas across the whole site. */
+  --bg-scene: #eeeeee;
 
   /* ---- Typography ------------------------------------------------------- */
   --font-sans: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
@@ -76,17 +81,24 @@
   --radius-lg: 24px;
   --radius-pill: 999px;
 
-  /* ---- Elevation -------------------------------------------------------- */
-  --shadow-sm: 0 2px 6px rgba(16, 18, 22, 0.10);
-  --shadow-md: 0 8px 24px rgba(16, 18, 22, 0.14);
-  --shadow-lg: 0 30px 80px rgba(16, 18, 22, 0.30);
+  /* ---- Elevation (cool, neutral — reads clean on pure white) ------------ */
+  --shadow-sm: 0 2px 6px rgba(16, 18, 22, 0.08);
+  --shadow-md: 0 10px 30px rgba(16, 18, 22, 0.10);
+  --shadow-lg: 0 40px 90px rgba(16, 18, 22, 0.16);
+  /* Soft, cool grounding shadow for floating media on white. */
+  --shadow-float: 0 40px 60px -30px rgba(20, 26, 40, 0.28);
 
   /* ---- Motion ----------------------------------------------------------- */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring:   cubic-bezier(0.25, 1.2, 0.5, 1);
+  /* A smooth, premium "settle" ease used by the scroll-reveal choreography. */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast:      150ms;
   --dur-base:      300ms;
   --dur-slow:      500ms;
+  /* Longer, graceful timing for on-scroll reveals + per-item stagger step. */
+  --dur-reveal:    900ms;
+  --reveal-stagger: 90ms;
 
   /* ---- Z-index scale (named, never magic numbers) ---------------------- */
   --z-floor:    1;
@@ -97,4 +109,13 @@
 
   /* ---- Layout container ------------------------------------------------- */
   --container-max: 1200px;
+
+  /* ---- Section rhythm ---------------------------------------------------
+     Intentional vertical cadence. Sections are sized to their CONTENT and
+     breathe via this padding — never forced to a full empty viewport. This
+     is the pulse that replaces the old min-height:100vh voids. */
+  --section-pad-y:   clamp(72px, 9vw, 132px);   /* standard block rhythm    */
+  --section-pad-y-sm: clamp(48px, 6vw, 88px);   /* tighter, paired sections */
+  --section-inset:   clamp(20px, 5vw, 64px);    /* horizontal page inset    */
+  --nav-height:      68px;                       /* sticky header height     */
 }

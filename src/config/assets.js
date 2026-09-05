@@ -11,8 +11,17 @@
 
 const ROOT = new URL("../../assets/", import.meta.url);
 
-/** Build an absolute URL for an asset under /assets. */
-const asset = (relativePath) => new URL(relativePath, ROOT).href;
+/* Cache-busting version tag. Bump this string whenever you re-export or crop
+   an asset that keeps the same filename — it appends ?v=… to every URL so the
+   browser is forced to fetch the fresh file instead of serving a stale cache. */
+const ASSET_VERSION = "3";
+
+/** Build an absolute URL for an asset under /assets (with a cache-bust tag). */
+const asset = (relativePath) => {
+  const url = new URL(relativePath, ROOT);
+  url.searchParams.set("v", ASSET_VERSION);
+  return url.href;
+};
 
 export const ASSETS = {
   demoVideo: asset("video/app-screen-video.mp4"),
