@@ -27,6 +27,7 @@ export const ASSETS = {
   demoVideo: asset("video/app-screen-video.mp4"),
   heroIntro: asset("images/One-tap-all-protected-illustration.png"),
   oneTapProtectedIllustration: asset("images/One-tap-protected.png"),
+  transparencyIllustration: asset("images/Absolute-transparancy-2.png"),
   transparencyIllustration1: asset("images/Absolute-transparancy-illustration1.png"),
   transparencyIllustration2: asset("images/Absolute-transparancy-illustration2.png"),
   unrestrictedInternetIllustration: asset("images/Unrestricted-internet-illustration.png"),

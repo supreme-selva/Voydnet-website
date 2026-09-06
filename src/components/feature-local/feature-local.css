@@ -51,6 +51,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  align-self: stretch;       /* fill the grid row height... */
+  justify-content: center;   /* ...so the copy sits vertically centred on the image */
 }
 .flocal__headline {
   font-family: var(--font-display);

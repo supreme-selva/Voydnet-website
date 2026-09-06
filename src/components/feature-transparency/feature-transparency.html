@@ -3,28 +3,25 @@
      --------------------------------------------------------------------------
      A two-column feature block on the creamy-white page:
 
-       LEFT  — a pair of model-3 3D phones, each showing one of the two
-               "absolute transparency" illustrations, arranged as a layered
-               cluster for depth.
+       LEFT  — the "absolute transparency" illustration image.
        RIGHT — the headline + supporting copy.
 
      Copy is referenced by key (data-i18n) and filled from the content
-     registry at runtime. The two phones are mounted into their slots by the
-     controller, and each illustration is placed into its screen via embed-view.
+     registry at runtime. The illustration's source is set by the controller
+     from the asset registry.
      ========================================================================== -->
 <section class="ftrans" data-component="feature-transparency">
   <div class="ftrans__inner">
 
-    <!-- LEFT: two layered model-3 phones -->
-    <div class="ftrans__media" data-reveal="scale">
-      <div class="ftrans__phone ftrans__phone--back"  data-slot="device-1"></div>
-      <div class="ftrans__phone ftrans__phone--front" data-slot="device-2"></div>
-    </div>
-
-    <!-- RIGHT: copy -->
+    <!-- LEFT: copy -->
     <div class="ftrans__copy">
       <h2 class="ftrans__headline" data-reveal="up" style="--reveal-index:0" data-i18n="transparency.headline"></h2>
       <p class="ftrans__subtext" data-reveal="up" style="--reveal-index:1" data-i18n="transparency.subtext"></p>
+    </div>
+
+    <!-- RIGHT: the transparency illustration (image only) -->
+    <div class="ftrans__media" data-reveal="scale">
+      <img class="ftrans__illustration" data-slot="illustration" alt="" />
     </div>
 
   </div>

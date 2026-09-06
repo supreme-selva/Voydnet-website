@@ -1,8 +1,8 @@
 /* ==========================================================================
    COMPONENT STYLES: feature-transparency
    --------------------------------------------------------------------------
-   Two-column feature: a layered pair of model-3 phones on the left, copy on
-   the right. Matches the elegant, creamy-white, Times New Roman voice of the
+   Two-column feature: the transparency illustration on the left, copy on the
+   right. Matches the elegant, creamy-white, Times New Roman voice of the
    other sections. Stacks to a single centred column on small screens.
    ========================================================================== */
 
@@ -24,32 +24,23 @@
   gap: clamp(var(--space-5), 5vw, 96px);
 }
 
-/* ---- Left column: the layered phone cluster ---- */
+/* ---- Left column: the transparency illustration ---- */
 .ftrans__media {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
-  min-height: clamp(420px, 46vw, 560px);
 }
 
-/* Each phone is absolutely placed so they overlap into a layered cluster. */
-.ftrans__phone {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* Back phase — higher and to the left, slightly behind. */
-.ftrans__phone--back {
-  z-index: 1;
-  transform: translate(-24%, -8%);
-}
-/* Front phone — lower and to the right, in front. */
-.ftrans__phone--front {
-  z-index: 2;
-  transform: translate(24%, 10%);
+.ftrans__illustration {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin-inline: auto;
+  /* A soft, cool shadow grounds the illustration on the creamy page. */
+  filter: drop-shadow(0 24px 32px rgba(20, 26, 40, 0.16));
 }
 
 /* ---- Right column: copy ---- */

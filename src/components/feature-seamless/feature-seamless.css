@@ -68,8 +68,8 @@
   z-index: 1;
 }
 .fseam__illustration {
-  width: 150%;                 /* grow well beyond the center column */
-  max-width: 900px;
+  width: 110%;                 /* spill just slightly past the center column */
+  max-width: 600px;
   height: auto;
   object-fit: contain;
   /* Soft, cool grounded shadow gives depth on the pure-white page. */
@@ -148,6 +148,12 @@
     align-items: center;
   }
   .fseam__subtext { margin-inline: auto; }
-  .fseam__media { order: 2; }
+  .fseam__media { order: 2; width: 100%; }
+  /* On stacked layouts the illustration must NOT spill past its column, or it
+     overlaps the copy above it. Keep it within the column and reasonably sized. */
+  .fseam__illustration {
+    width: 100%;
+    max-width: 420px;
+  }
   .fseam__list { order: 3; width: min(100%, 520px); }
 }
