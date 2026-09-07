@@ -1,32 +1,25 @@
 <!-- ==========================================================================
      COMPONENT: final-cta  (closing section of the site)
      --------------------------------------------------------------------------
-     A layered, full-bleed call to action:
+     A simple closing call to action:
 
-       LAYER 1 (back)   — the "birds" video, covering the whole section width,
-                          looping forever.
-       LAYER 2 (middle) — the "mobile" video, centred on top of the birds
-                          video, looping forever, playing at the same time.
-       LAYER 3 (front)  — the copy (headline, subtext, button, micro-copy),
-                          overlapping the birds layer.
+       TOP    — a single looping video that fills the available width and
+                resizes responsively (natural aspect ratio, never cropped, no
+                horizontal overflow).
+       BELOW  — the copy (subtext, download button, micro-copy).
 
-     Both videos are muted so browsers allow simultaneous autoplay. Copy is
-     referenced by key (data-i18n) and filled from the content registry; the
-     CTA button is built by the shared button factory in the controller.
+     The video is muted so browsers allow autoplay. Copy is referenced by key
+     (data-i18n) and filled from the content registry; the CTA button is built
+     by the shared button factory in the controller.
      ========================================================================== -->
 <section class="fcta" data-component="final-cta">
 
-  <!-- LAYER 1: full-cover looping birds video -->
-  <video class="fcta__birds" data-slot="birds"
+  <!-- TOP: single looping, responsively-sized video -->
+  <video class="fcta__video" data-slot="video"
          autoplay muted loop playsinline></video>
 
-  <!-- LAYER 2: centred looping mobile video, above the birds -->
-  <video class="fcta__mobile" data-slot="mobile"
-         autoplay muted loop playsinline></video>
-
-  <!-- LAYER 3: copy overlapping the birds layer -->
+  <!-- BELOW: copy -->
   <div class="fcta__content">
-    <h2 class="fcta__headline" data-i18n="cta.headline"></h2>
     <p class="fcta__subtext" data-i18n="cta.subtext"></p>
     <div class="fcta__cta" data-slot="cta"></div>
     <p class="fcta__microcopy" data-i18n="cta.microcopy"></p>

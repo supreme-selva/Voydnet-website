@@ -70,9 +70,15 @@
   .feature__inner {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: var(--space-4);
+    gap: var(--space-2);
   }
-  .feature__media { order: 1; }
+  .feature__media { order: 1; width: 100%; }
+  /* Cap the illustration so its baked-in transparent padding doesn't leave a
+     tall empty band above the copy on phones. */
+  .feature__illustration {
+    width: 100%;
+    max-width: 320px;
+  }
   .feature__copy {
     order: 2;
     text-align: center;

@@ -32,8 +32,7 @@ export const ASSETS = {
   transparencyIllustration2: asset("images/Absolute-transparancy-illustration2.png"),
   unrestrictedInternetIllustration: asset("images/Unrestricted-internet-illustration.png"),
   worksLocallyIllustration: asset("images/Works-locally-nothing-goes-out-illustration.png"),
-  finalCtaBirdsVideo: asset("video/final-cta-birds.mp4"),
-  finalCtaMobileVideo: asset("video/final-cta-mobile.mp4"),
+  finalCtaVideo: asset("video/Final_CTA_video.mp4"),
   // Add future assets here, e.g.:
   // logo:       asset("images/logo.svg"),
 };

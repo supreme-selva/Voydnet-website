@@ -76,9 +76,18 @@
   .flocal__inner {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: var(--space-4);
+    gap: 0;                       /* the image's own transparent padding is the gap */
   }
-  .flocal__media { order: 1; }
+  .flocal__media {
+    order: 1;
+    width: 100%;
+  }
+  /* Cap the illustration so its baked-in transparent padding doesn't create a
+     tall empty band on phones. */
+  .flocal__illustration {
+    width: 100%;
+    max-width: 360px;
+  }
   .flocal__copy {
     order: 2;
     text-align: center;

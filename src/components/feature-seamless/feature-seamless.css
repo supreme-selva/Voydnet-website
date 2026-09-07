@@ -30,10 +30,38 @@
   grid-template-columns: 0.78fr 1.6fr 0.78fr;
   align-items: center;
   gap: clamp(var(--space-4), 2.5vw, var(--space-6));
+  /* Positioning context for the full-width squircle backdrop. */
+  position: relative;
+  /* Clear inner padding so the side text never touches the tile's corners. */
+  padding-inline: clamp(var(--space-5), 4vw, var(--space-8));
+}
+
+/* Squircle backdrop: a soft cream tile that spans the FULL width and covers ALL
+   the text on both sides, with clear inner padding so no copy touches the
+   corners. It rises high enough to fully contain the side columns, while the
+   phone's TOP still juts out above it for a 3D pop. */
+.fseam__inner::before {
+  content: "";
+  position: absolute;
+  z-index: 0;                  /* behind the copy / media / list (z-index 1) */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Start a little below the row top so the bottom-anchored phone's TOP juts
+     out above the tile (3D pop), while the tile is still tall enough to fully
+     contain all the side text. */
+  top: clamp(48px, 6vw, 96px);
+  background: #fff8ef;
+  border-radius: 44px;         /* squircle corners */
+  box-shadow:
+    0 30px 70px rgba(20, 26, 40, 0.14),
+    0 4px 10px rgba(20, 26, 40, 0.06);
 }
 
 /* ---- Left: main copy ---- */
 .fseam__copy {
+  position: relative;
+  z-index: 1;                  /* above the squircle backdrop */
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -65,12 +93,24 @@
   /* Let the big illustration spill past its narrow grid column without
      squeezing the side text columns. */
   overflow: visible;
-  z-index: 1;
+  z-index: 1;                  /* above the squircle backdrop */
+  position: relative;
+  /* Anchor the phone to the BOTTOM of the row so its base sits flush with the
+     container's bottom edge; the tile starts lower than the row top, so the
+     phone's TOP naturally juts out above the tile for the 3D pop. */
+  align-self: end;
 }
+
 .fseam__illustration {
+  position: relative;
+  z-index: 1;                  /* the phone floats above the squircle */
   width: 110%;                 /* spill just slightly past the center column */
   max-width: 600px;
   height: auto;
+  /* Reserve the image's box BEFORE it loads (natural ratio 824x900) so the
+     layout is stable on first paint. Without this the box collapsed until a
+     resize forced a reflow, causing the phone to overlap the copy on mobile. */
+  aspect-ratio: 824 / 900;
   object-fit: contain;
   /* Soft, cool grounded shadow gives depth on the pure-white page. */
   filter: drop-shadow(0 34px 46px rgba(20, 26, 40, 0.18));
@@ -78,6 +118,8 @@
 
 /* ---- Right: hover-reveal accordion ---- */
 .fseam__list {
+  position: relative;
+  z-index: 1;                  /* above the squircle backdrop */
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -141,19 +183,41 @@
     grid-template-columns: 1fr;
     justify-items: center;
     gap: var(--space-5);
+    padding: var(--space-5);
   }
+
+  /* No background container on mobile */
+  .fseam__inner::before {
+    display: none;
+  }
+
+  /* 1. Text content */
   .fseam__copy {
     order: 1;
     text-align: center;
     align-items: center;
   }
   .fseam__subtext { margin-inline: auto; }
-  .fseam__media { order: 2; width: 100%; }
-  /* On stacked layouts the illustration must NOT spill past its column, or it
-     overlaps the copy above it. Keep it within the column and reasonably sized. */
-  .fseam__illustration {
-    width: 100%;
-    max-width: 420px;
+
+  /* 2. Image - small and compact */
+  .fseam__media {
+    order: 2;
+    align-self: center;
+    /* Push image down to prevent overlap with text above */
+    margin-top: 60px;
+    /* Reset any reveal animation styles that might leak through */
+    opacity: 1 !important;
+    transform: none !important;
   }
-  .fseam__list { order: 3; width: min(100%, 520px); }
+  .fseam__illustration {
+    width: 180px;
+    height: auto;
+    filter: none !important;
+  }
+
+  /* 3. Accordion list */
+  .fseam__list {
+    order: 3;
+    width: min(100%, 520px);
+  }
 }

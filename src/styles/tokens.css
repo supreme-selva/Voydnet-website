@@ -45,8 +45,8 @@
   --glow-soft:              rgba(20, 26, 38, 0.06);     /* neutral halo     */
 
   /* ---- Page backdrop ---------------------------------------------------- */
-  /* Light-gray canvas across the whole site. */
-  --bg-scene: #eeeeee;
+  /* Warm creamy off-white canvas across the whole site. */
+  --bg-scene: #fffcf8;
 
   /* ---- Typography ------------------------------------------------------- */
   --font-sans: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;

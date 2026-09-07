@@ -72,9 +72,15 @@
   .ftrans__inner {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: var(--space-5);
+    gap: var(--space-2);
   }
   .ftrans__media { order: 1; width: 100%; }
+  /* Cap the illustration so its baked-in transparent padding doesn't leave a
+     tall empty band above the copy on phones. */
+  .ftrans__illustration {
+    width: 100%;
+    max-width: 320px;
+  }
   .ftrans__copy {
     order: 2;
     text-align: center;

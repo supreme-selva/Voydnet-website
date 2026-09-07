@@ -136,22 +136,6 @@
   filter: drop-shadow(0 24px 32px rgba(20, 26, 40, 0.16));
 }
 
-/* After the entrance settles, the image breathes with a slow, gentle float so
-   the scene stays alive. Only kicks in once the stage has revealed, so it
-   never fights the rise-up entrance transform (which lives on the stage). */
-.has-motion .hero__stage--rise.is-revealed .hero__image {
-  animation: hero-image-float 6s ease-in-out 1200ms infinite alternate;
-}
-@keyframes hero-image-float {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(0, -12px, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .has-motion .hero__stage--rise.is-revealed .hero__image {
-    animation: none;
-  }
-}
-
 /* ---- Responsive: stack into one centred column ---- */
 @media (max-width: 900px) {
   .hero {
