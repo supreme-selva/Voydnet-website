@@ -28,6 +28,13 @@
   color: var(--color-ink);
 }
 
+/* Illustration above the headline — scales fluidly, never overflows. */
+.thankyou__image {
+  width: clamp(200px, 40vw, 360px);
+  height: auto;
+  margin-bottom: var(--space-6, 32px);
+}
+
 /* Headline — the site's voice: Times New Roman, large, tight, graceful. */
 .thankyou__headline {
   max-width: 20ch;
