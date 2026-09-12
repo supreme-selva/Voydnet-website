@@ -27,7 +27,7 @@
   margin-inline: auto;
   display: grid;
   /* Narrower side text columns, a big center column for the illustration. */
-  grid-template-columns: 0.78fr 1.6fr 0.78fr;
+  grid-template-columns: 0.72fr 1.9fr 0.72fr;
   align-items: center;
   gap: clamp(var(--space-4), 2.5vw, var(--space-6));
   /* Positioning context for the full-width squircle backdrop. */
@@ -104,8 +104,10 @@
 .fseam__illustration {
   position: relative;
   z-index: 1;                  /* the phone floats above the squircle */
-  width: 110%;                 /* spill just slightly past the center column */
-  max-width: 600px;
+  width: 132%;                 /* spill well past the narrow center column so
+                                  the phone reads as large as the other
+                                  sections' illustrations */
+  max-width: 760px;
   height: auto;
   /* Reserve the image's box BEFORE it loads (natural ratio 824x900) so the
      layout is stable on first paint. Without this the box collapsed until a
@@ -246,8 +248,8 @@
     transform: none !important;
   }
   .fseam__illustration {
-    width: 160px;
-    max-width: 160px;
+    width: 100%;
+    max-width: 340px;
     height: auto;
     filter: none !important;
     display: block;
