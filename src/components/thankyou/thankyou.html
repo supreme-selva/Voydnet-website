@@ -1,0 +1,25 @@
+<!-- ==========================================================================
+     COMPONENT: thankyou  (the /download "Thank you" screen)
+     --------------------------------------------------------------------------
+     Shown once a download has started. A simple, centred vertical stack:
+
+       TOP    — the headline ("Thank you for choosing VoydNet").
+       BELOW  — the looping Final CTA video that fills the available width and
+                resizes responsively (natural aspect ratio, never cropped, no
+                horizontal overflow).
+
+     The video is muted so browsers allow autoplay. Copy is referenced by key
+     (data-i18n) and filled from the content registry.
+     ========================================================================== -->
+<section class="thankyou" data-component="thankyou">
+
+  <!-- TOP: headline -->
+  <div class="thankyou__content">
+    <h1 class="thankyou__headline" data-i18n="thankyou.headline"></h1>
+  </div>
+
+  <!-- BELOW: single looping, responsively-sized video -->
+  <video class="thankyou__video" data-slot="video"
+         autoplay muted loop playsinline></video>
+
+</section>

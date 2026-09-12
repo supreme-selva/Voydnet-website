@@ -1,24 +1,17 @@
 <!-- ==========================================================================
      COMPONENT: final-cta  (closing section of the site)
      --------------------------------------------------------------------------
-     A simple closing call to action:
+     A simple closing call to action: the copy (subtext, download button,
+     micro-copy). Pressing "Download Voydnet" starts the download AND routes to
+     the /download "Thank you" screen, which now hosts the closing video.
 
-       TOP    — a single looping video that fills the available width and
-                resizes responsively (natural aspect ratio, never cropped, no
-                horizontal overflow).
-       BELOW  — the copy (subtext, download button, micro-copy).
-
-     The video is muted so browsers allow autoplay. Copy is referenced by key
-     (data-i18n) and filled from the content registry; the CTA button is built
-     by the shared button factory in the controller.
+     Copy is referenced by key (data-i18n) and filled from the content
+     registry; the CTA button is built by the shared button factory in the
+     controller.
      ========================================================================== -->
 <section class="fcta" data-component="final-cta">
 
-  <!-- TOP: single looping, responsively-sized video -->
-  <video class="fcta__video" data-slot="video"
-         autoplay muted loop playsinline></video>
-
-  <!-- BELOW: copy -->
+  <!-- Copy -->
   <div class="fcta__content">
     <p class="fcta__subtext" data-i18n="cta.subtext"></p>
     <div class="fcta__cta" data-slot="cta"></div>

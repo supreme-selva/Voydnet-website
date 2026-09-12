@@ -18,4 +18,8 @@ export const routes = {
     title: "About",
     load: () => import("../pages/about/about.page.js"),
   },
+  "/download": {
+    title: "Thank you",
+    load: () => import("../pages/thankyou/thankyou.page.js"),
+  },
 };

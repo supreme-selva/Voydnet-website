@@ -3,16 +3,11 @@
    --------------------------------------------------------------------------
    A simple closing section on the creamy-white page:
 
-     .fcta__content — the copy (subtext, button, micro-copy), sitting at the
-                      TOP of the section.
-     .fcta__video   — a single looping video below the copy. It scales to the
-                      full available width and keeps its natural aspect ratio,
-                      so it is NEVER cropped and NEVER causes horizontal scroll.
-                      On window resize (and on mobile) it fluidly re-sizes to
-                      match the horizontal space.
+     .fcta__content — the copy (subtext, button, micro-copy), centred.
 
-   Identical behaviour on desktop and mobile — the layout is a natural vertical
-   stack, so it adapts to any width without special-casing.
+   The closing video now lives on the /download "Thank you" screen. Identical
+   behaviour on desktop and mobile — a natural vertical stack that adapts to
+   any width without special-casing.
    ========================================================================== */
 
 .fcta {
@@ -25,11 +20,10 @@
   overflow-x: hidden;             /* extra guard against sideways scroll */
 }
 
-/* ---- TOP: copy, centred column above the video ---- */
+/* ---- Copy, centred column ---- */
 .fcta__content {
   width: min(100%, var(--container-max));
   margin-inline: auto;
-  margin-top: clamp(var(--space-6), 6vw, var(--space-8));   /* gap below the video */
   padding-inline: var(--section-inset);
   text-align: center;
   display: flex;
@@ -64,17 +58,4 @@
   --btn-bg: var(--color-ink);
   --btn-fg: #fff;
   --btn-bg-hover: #000;
-}
-
-/* ---- TOP: the single responsive video ----
-   width:100% + height:auto → the video always fits the section width and
-   keeps its real aspect ratio (no cropping). max-width:100% + a display:block
-   box means it can never be wider than the viewport, so no horizontal scroll.
-   It re-flows automatically whenever the window is resized. */
-.fcta__video {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;            /* never crop the frame */
 }

@@ -46,8 +46,18 @@ export const ASSETS = {
 export const DOWNLOAD_URL =
   "https://rvxinwijmmekxemvplji.supabase.co/storage/v1/object/public/App%20releases%20apks/VoydNet-1.0.apk";
 
-/** Trigger a browser download of the VoydNet APK. */
-export function downloadVoydnet(url = DOWNLOAD_URL) {
+/**
+ * Trigger a browser download of the VoydNet APK, then route to the /download
+ * "Thank you" screen so the user lands on the closing video/message once the
+ * download has started.
+ *
+ * @param {string} [url]            The APK URL (defaults to the shipped release).
+ * @param {object} [opts]
+ * @param {boolean} [opts.navigate=true]  Set false to download without routing.
+ */
+export function downloadVoydnet(url = DOWNLOAD_URL, opts = {}) {
+  const { navigate = true } = opts;
+
   const a = document.createElement("a");
   a.href = url;
   a.download = "";                 // hint the browser to save rather than navigate
@@ -55,4 +65,10 @@ export function downloadVoydnet(url = DOWNLOAD_URL) {
   document.body.appendChild(a);
   a.click();
   a.remove();
+
+  // Once the download has started, show the "Thank you" screen. Hash routing
+  // means a plain hash change drives the router with no dependency on it here.
+  if (navigate && location.hash.slice(1).split("?")[0] !== "/download") {
+    location.hash = "#/download";
+  }
 }

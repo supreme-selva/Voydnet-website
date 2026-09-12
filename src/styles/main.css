@@ -26,6 +26,7 @@
 @import "../components/feature-seamless/feature-seamless.css";
 @import "../components/feature-local/feature-local.css";
 @import "../components/final-cta/final-cta.css";
+@import "../components/thankyou/thankyou.css";
 /* phone-mockup is a family of interchangeable models; import each model. */
 @import "../components/phone-mockup/models/model-1/model-1.css";
 @import "../components/phone-mockup/models/model-2/model-2.css";
