@@ -1,18 +1,8 @@
 /* ==========================================================================
    COMPONENT STYLES: thankyou
    --------------------------------------------------------------------------
-   The /download "Thank you" screen. A natural vertical stack on the creamy
-   scene background:
-
-     .thankyou__content — the headline, centred at the TOP of the section.
-     .thankyou__video   — the looping Final CTA video below it. It scales to
-                          the full available width and keeps its natural aspect
-                          ratio, so it is NEVER cropped and NEVER causes
-                          horizontal scroll. On window resize (and on mobile)
-                          it fluidly re-sizes to match the horizontal space.
-
-   Identical behaviour on desktop and mobile — the layout is a natural vertical
-   stack, so it adapts to any width without special-casing.
+   The /download "Thank you" screen. A single centred headline on the creamy
+   scene background, filling the viewport height.
    ========================================================================== */
 
 .thankyou {
@@ -24,14 +14,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;             /* extra guard against sideways scroll */
+  overflow-x: hidden;
 }
 
-/* ---- TOP: headline, centred column above the video ---- */
 .thankyou__content {
   width: min(100%, var(--container-max));
   margin-inline: auto;
-  margin-bottom: clamp(var(--space-6), 6vw, var(--space-8));
   padding-inline: var(--section-inset);
   text-align: center;
   display: flex;
@@ -49,17 +37,4 @@
   line-height: 1.08;
   letter-spacing: -0.5px;
   color: var(--color-ink);
-}
-
-/* ---- BELOW: the single responsive video ----
-   width:100% + height:auto → the video always fits the section width and
-   keeps its real aspect ratio (no cropping). max-width:100% + a display:block
-   box means it can never be wider than the viewport, so no horizontal scroll.
-   It re-flows automatically whenever the window is resized. */
-.thankyou__video {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;            /* never crop the frame */
 }
