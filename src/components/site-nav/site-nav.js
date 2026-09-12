@@ -14,10 +14,15 @@
 
 import { createButton } from "../button/button.js";
 import { t, hydrate } from "../../content/strings.js";
+import { ASSETS } from "../../config/assets.js";
 
 export function mount(root, props = {}) {
   // 1) Fill the brand wordmark.
   hydrate(root);
+
+  // 1b) Point the brand logo at the registered asset.
+  const logo = root.querySelector('[data-slot="logo"]');
+  if (logo) logo.src = ASSETS.brandLogo;
 
   // 2) Compact primary CTA on the right.
   const ctaHost = root.querySelector('[data-slot="cta"]');

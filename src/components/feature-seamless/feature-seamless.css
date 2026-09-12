@@ -148,6 +148,36 @@
   line-height: 1.2;
   color: var(--color-ink);
   margin: 0;
+  /* Lay the label + dropdown chevron on one row so viewers can tell the
+     item is expandable. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* Dropdown chevron: a small down-arrow drawn with a rotated border box.
+   It hints the item is expandable and flips upward when opened. */
+.fseam__item-title::after {
+  content: "";
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  margin-right: 2px;
+  border-right: 2px solid var(--color-ink-soft);
+  border-bottom: 2px solid var(--color-ink-soft);
+  transform: rotate(45deg);          /* points down = "expand" */
+  transform-origin: center;
+  transition:
+    transform var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard);
+}
+
+/* Flip the chevron up and darken it when the item is hovered / open. */
+.fseam__item:hover .fseam__item-title::after,
+.fseam__item.is-open .fseam__item-title::after {
+  transform: rotate(-135deg);        /* points up = "collapse" */
+  border-color: var(--color-ink);
 }
 
 /* Collapsed by default: no height, faded out. */

@@ -32,8 +32,8 @@ export const ASSETS = {
   unrestrictedInternetIllustration: asset("images/Unrestricted-internet-illustration.webp"),
   worksLocallyIllustration: asset("images/Works-locally-nothing-goes-out-illustration.webp"),
   thankyouImage: asset("images/Thankyou-screen-Image.webp"),
-  // Add future assets here, e.g.:
-  // logo:       asset("images/logo.svg"),
+  // Brand logo shown left of the "Voydnet" wordmark in the site header.
+  brandLogo: asset("images/BrandLogo-VoydNet.webp"),
 };
 
 /* --------------------------------------------------------------------------
