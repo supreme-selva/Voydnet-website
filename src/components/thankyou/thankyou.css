@@ -28,9 +28,12 @@
   color: var(--color-ink);
 }
 
-/* Illustration above the headline — scales fluidly, never overflows. */
+/* Illustration above the headline — fills the available horizontal space,
+   scaling up with the viewport and capping at the content container width so
+   it never overflows or gets blurry beyond its native size. */
 .thankyou__image {
-  width: clamp(200px, 40vw, 360px);
+  width: 100%;
+  max-width: min(var(--container-max), 900px);
   height: auto;
   margin-bottom: var(--space-6, 32px);
 }
