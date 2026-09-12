@@ -15,6 +15,7 @@
 import { loadComponent } from "../../core/component.js";
 import { loadStrings } from "../../content/strings.js";
 import { createMotion } from "../../core/motion.js";
+import { downloadVoydnet } from "../../config/assets.js";
 
 export async function render(outlet, ctx) {
   // Ensure copy is available before components hydrate their [data-i18n].
@@ -41,15 +42,12 @@ export async function render(outlet, ctx) {
 
   // Sticky header first (anchors the page, carries the primary CTA).
   const siteNav = await loadComponent("site-nav", siteNavHost, {
-    onGetVoydnet: () => console.info("[site-nav] Get Voydnet clicked"),
+    onGetVoydnet: () => downloadVoydnet(),
   });
 
   // Mount each section component.
   const hero = await loadComponent("hero", heroHost, {
-    onGetVoydnet: () => {
-      // Wire to a real download / route later. Placeholder for now.
-      console.info("[showcase] Get Voydnet clicked");
-    },
+    onGetVoydnet: () => downloadVoydnet(),
   });
 
   const featureProtect = await loadComponent("feature-protect", protectHost);
@@ -57,7 +55,7 @@ export async function render(outlet, ctx) {
   const featureSeamless = await loadComponent("feature-seamless", seamlessHost);
   const featureLocal = await loadComponent("feature-local", localHost);
   const finalCta = await loadComponent("final-cta", finalCtaHost, {
-    onDownload: () => console.info("[final-cta] Download Voydnet clicked"),
+    onDownload: () => downloadVoydnet(),
   });
 
   // With every section in the DOM, start the scroll-choreography engine. It

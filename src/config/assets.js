@@ -36,3 +36,23 @@ export const ASSETS = {
   // Add future assets here, e.g.:
   // logo:       asset("images/logo.svg"),
 };
+
+/* --------------------------------------------------------------------------
+   Download: the shipped Android APK. This is an external (Supabase) URL, so
+   it is NOT run through asset()/ASSET_VERSION — it points straight at the
+   published release. Every "Get Voydnet" / "Download Voydnet" CTA resolves
+   here so there is a single place to bump the version.
+   -------------------------------------------------------------------------- */
+export const DOWNLOAD_URL =
+  "https://rvxinwijmmekxemvplji.supabase.co/storage/v1/object/public/App%20releases%20apks/VoydNet-1.0.apk";
+
+/** Trigger a browser download of the VoydNet APK. */
+export function downloadVoydnet(url = DOWNLOAD_URL) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "";                 // hint the browser to save rather than navigate
+  a.rel = "noopener";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
