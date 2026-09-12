@@ -1,16 +1,20 @@
 <!-- ==========================================================================
      COMPONENT: thankyou  (the /download "Thank you" screen)
      --------------------------------------------------------------------------
-     Shown once a download has started. A simple, centred screen with just the
-     headline ("Thank you for choosing VoydNet").
+     Shown once a download has started. A centred stack: the "Thank you"
+     headline on top, the illustration, a sub-headline, and a small
+     download-fallback line whose "click here" link re-triggers the APK
+     download.
 
      Copy is referenced by key (data-i18n) and filled from the content registry.
      ========================================================================== -->
 <section class="thankyou" data-component="thankyou">
 
   <div class="thankyou__content">
-    <img class="thankyou__image" data-slot="image" alt="" width="480" height="480" />
     <h1 class="thankyou__headline" data-i18n="thankyou.headline"></h1>
+    <img class="thankyou__image" data-slot="image" alt="" width="1487" height="1536" />
+    <h2 class="thankyou__subheadline" data-i18n="thankyou.subheadline"></h2>
+    <p class="thankyou__hint" data-i18n="thankyou.download-hint"></p>
   </div>
 
 </section>
