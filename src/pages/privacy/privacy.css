@@ -1,0 +1,315 @@
+/* ==========================================================================
+   PAGE STYLES: privacy  (legal long-form document)
+   --------------------------------------------------------------------------
+   A minimal, editorial reading surface for the Privacy Policy — closer to
+   how top-tier product teams present legal docs: no big hero image, no
+   boxed cards, no drop shadows. Just a tight two-row header (identity +
+   date, then a justified quick-nav strip) followed by calm, well-spaced
+   typography. Everything is token-driven so it stays native to Voydnet.
+   ========================================================================== */
+
+.legal {
+  width: 100%;
+  background: var(--bg-scene);
+  padding-block: calc(var(--nav-height) + var(--space-6)) var(--section-pad-y);
+  padding-inline: var(--section-inset);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   HEADER  —  two justified rows, edge-to-edge, no card
+   ========================================================================== */
+.legal__head {
+  width: min(100%, 800px);
+  margin: 0 auto var(--space-8);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.legal__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;   /* justified, not left-clumped */
+  width: 100%;
+  gap: var(--space-4);
+}
+
+/* ---- Row 1: mark + title  vs.  effective date ---- */
+.legal__row--top { margin-bottom: var(--space-4); }
+
+.legal__id {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.legal__mark {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 30%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.legal__title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 36px);
+  line-height: 1.1;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.legal__date {
+  margin: 0;
+  flex-shrink: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ---- Row 2: quick-nav strip, justified across the full width ---- */
+.legal__row--nav {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.legal__row--nav button {
+  flex: 1 1 auto;
+  text-align: center;
+  padding: var(--space-2) 0;
+  background: none;
+  border: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-standard);
+  white-space: nowrap;
+}
+
+.legal__row--nav button:hover,
+.legal__row--nav button:focus-visible {
+  color: var(--color-brand);
+}
+
+.legal__row--nav button:not(:last-child) {
+  border-right: 1px solid var(--color-line);
+}
+
+/* ==========================================================================
+   DOCUMENT  —  the reading column
+   ========================================================================== */
+.legal__doc {
+  width: min(100%, 680px);
+  margin-inline: auto;
+  font-family: var(--font-serif);
+}
+
+.legal__lede {
+  font-size: clamp(17px, 1.7vw, 19px);
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+  margin: 0 0 var(--space-7);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* ==========================================================================
+   SECTION TYPOGRAPHY
+   ========================================================================== */
+.legal__h2 {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.6vw, 26px);
+  line-height: 1.25;
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
+  margin: var(--space-8) 0 var(--space-3);
+  scroll-margin-top: calc(var(--nav-height) + var(--space-4));
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+/* Quiet inline section number — small, muted, not shouting for attention. */
+.legal__num {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-brand);
+  flex-shrink: 0;
+}
+
+.legal__h3 {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.3;
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
+  margin: var(--space-5) 0 var(--space-3);
+}
+
+/* ---- Body copy: justified, like a printed page/top-tier docs ---- */
+.legal__p {
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.75;
+  color: var(--color-ink-soft);
+  margin: 0 0 var(--space-4);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+/* ---- Lists -------------------------------------------------------------- */
+.legal__list {
+  margin: 0 0 var(--space-4);
+  padding-left: 0;
+  list-style: none;
+}
+
+.legal__list li {
+  position: relative;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.75;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-4);
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.legal__list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-brand);
+}
+
+.legal__list .legal__list {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.legal__list .legal__list > li::before {
+  background: transparent;
+  border: 1.5px solid var(--color-muted);
+}
+
+.legal__list strong { color: var(--color-ink); }
+
+/* ---- Inline code (API names, sandbox paths) ----------------------------- */
+.legal code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  padding: 0.12em 0.42em;
+  color: var(--color-ink);
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   CONTACT  —  a quiet justified two-column key/value list (no card)
+   ========================================================================== */
+.legal__contact {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.legal__contact-row {
+  display: flex;
+  justify-content: space-between;   /* justified rows, edge to edge */
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.legal__contact-row:last-child { border-bottom: 0; }
+
+.legal__contact dt {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;
+}
+
+.legal__contact dd {
+  margin: 0;
+  text-align: right;
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.legal__foot {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.legal__foot-note {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.legal__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.legal__actions .btn--primary {
+  --btn-bg: var(--color-ink);
+  --btn-fg: #fff;
+  --btn-bg-hover: #000;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 640px) {
+  .legal__row--top {
+    flex-wrap: wrap;
+  }
+  .legal__date { order: 3; width: 100%; }
+  .legal__row--nav {
+    justify-content: flex-start;
+    gap: var(--space-3);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .legal__row--nav button {
+    flex: 0 0 auto;
+    border-right: 0 !important;
+  }
+  .legal__contact-row { flex-direction: column; align-items: flex-start; gap: var(--space-1); }
+  .legal__contact dd { text-align: left; }
+}

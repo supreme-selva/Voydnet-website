@@ -22,4 +22,8 @@ export const routes = {
     title: "Thank you",
     load: () => import("../pages/thankyou/thankyou.page.js"),
   },
+  "/Privacy&Policy": {
+    title: "Privacy Policy",
+    load: () => import("../pages/privacy/privacy.page.js"),
+  },
 };

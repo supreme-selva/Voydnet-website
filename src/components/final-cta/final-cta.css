@@ -53,6 +53,24 @@
   color: var(--color-ink-soft);
 }
 
+/* ---- Quiet legal footer link ---- */
+.fcta__legal {
+  margin-top: var(--space-5);
+}
+
+.fcta__legal-link {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+.fcta__legal-link:hover {
+  color: var(--color-ink);
+}
+
 /* Black pill button (default primary: ink background, white label). */
 .fcta__cta .btn--primary {
   --btn-bg: var(--color-ink);

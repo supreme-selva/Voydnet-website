@@ -36,6 +36,7 @@
 
 /* ---- Page-level styles -------------------------------------------------- */
 @import "../pages/showcase/showcase.css";
+@import "../pages/privacy/privacy.css";
 
 /* ---- Utilities MUST be last so they can override when applied ----------- */
 @import "./utilities.css";

@@ -14,7 +14,7 @@ const ROOT = new URL("../../assets/", import.meta.url);
 /* Cache-busting version tag. Bump this string whenever you re-export or crop
    an asset that keeps the same filename — it appends ?v=… to every URL so the
    browser is forced to fetch the fresh file instead of serving a stale cache. */
-const ASSET_VERSION = "4";
+const ASSET_VERSION = "6";
 
 /** Build an absolute URL for an asset under /assets (with a cache-bust tag). */
 const asset = (relativePath) => {
@@ -32,6 +32,7 @@ export const ASSETS = {
   unrestrictedInternetIllustration: asset("images/Unrestricted-internet-illustration.webp"),
   worksLocallyIllustration: asset("images/Works-locally-nothing-goes-out-illustration.webp"),
   thankyouImage: asset("images/Thankyou-screen-Image.webp"),
+  privacyPolicyImage: asset("images/Privacy-Policy-Image.webp"),
   // Brand logo shown left of the "Voydnet" wordmark in the site header.
   brandLogo: asset("images/BrandLogo-VoydNet.webp"),
 };
