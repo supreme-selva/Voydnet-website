@@ -45,7 +45,7 @@ export const ASSETS = {
    here so there is a single place to bump the version.
    -------------------------------------------------------------------------- */
 export const DOWNLOAD_URL =
-  "https://rvxinwijmmekxemvplji.supabase.co/storage/v1/object/public/App%20releases%20apks/VoydNet-1.0.apk";
+  "https://rvxinwijmmekxemvplji.supabase.co/storage/v1/object/public/App%20releases%20apks/voydnet-v1.1-2.apk";
 
 /**
  * Trigger a browser download of the VoydNet APK, then route to the /download
