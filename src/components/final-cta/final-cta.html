@@ -11,6 +11,12 @@
      ========================================================================== -->
 <section class="fcta" data-component="final-cta">
 
+  <!-- Centred lead image, sits above the closing copy. Source is set by the
+       controller from the asset registry. -->
+  <div class="fcta__media">
+    <img class="fcta__image" data-slot="image" alt="" loading="lazy" decoding="async" />
+  </div>
+
   <!-- Copy -->
   <div class="fcta__content">
     <p class="fcta__subtext" data-i18n="cta.subtext"></p>
@@ -21,6 +27,7 @@
          and consistent with the site-nav brand link (href="#/"). -->
     <nav class="fcta__legal" aria-label="Legal">
       <a class="fcta__legal-link" href="#/Privacy&Policy">Privacy Policy</a>
+      <a class="fcta__legal-link" href="#/terms">Terms of Service</a>
     </nav>
   </div>
 

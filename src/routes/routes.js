@@ -26,4 +26,16 @@ export const routes = {
     title: "Privacy Policy",
     load: () => import("../pages/privacy/privacy.page.js"),
   },
+  "/terms": {
+    title: "Terms of Service",
+    load: () => import("../pages/terms/terms.page.js"),
+  },
+  "/licencing": {
+    title: "Licensing",
+    load: () => import("../pages/licensing/licensing.page.js"),
+  },
+  "/faqs": {
+    title: "FAQs & Support",
+    load: () => import("../pages/faqs/faqs.page.js"),
+  },
 };

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   PAGE STYLES: terms  (legal long-form document)
+   --------------------------------------------------------------------------
+   The Terms of Service page shares the entire editorial "legal" surface with
+   the Privacy Policy (see pages/privacy/privacy.css for .legal, .legal__head,
+   .legal__doc, typography, contact list, footer, and responsive rules). To
+   keep the two documents visually identical we deliberately DO NOT redefine
+   any of those here.
+
+   This file adds only what the Terms page needs on top of that shared base:
+   a quiet inline link style (used for the cross-reference to the Privacy
+   Policy), token-driven so it stays native to Voydnet.
+   ========================================================================== */
+
+.legal__link {
+  color: var(--color-brand);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-brand) 40%, transparent);
+  transition: border-color var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard);
+}
+
+.legal__link:hover,
+.legal__link:focus-visible {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}

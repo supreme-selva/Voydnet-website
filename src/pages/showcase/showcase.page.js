@@ -30,7 +30,8 @@ export async function render(outlet, ctx) {
     <div data-slot="feature-transparency"></div>
     <div data-slot="feature-seamless"></div>
     <div data-slot="feature-local"></div>
-    <div data-slot="final-cta"></div>`;
+    <div data-slot="final-cta"></div>
+    <div data-slot="site-footer"></div>`;
 
   const siteNavHost = outlet.querySelector('[data-slot="site-nav"]');
   const heroHost = outlet.querySelector('[data-slot="hero"]');
@@ -39,6 +40,7 @@ export async function render(outlet, ctx) {
   const seamlessHost = outlet.querySelector('[data-slot="feature-seamless"]');
   const localHost = outlet.querySelector('[data-slot="feature-local"]');
   const finalCtaHost = outlet.querySelector('[data-slot="final-cta"]');
+  const siteFooterHost = outlet.querySelector('[data-slot="site-footer"]');
 
   // Sticky header first (anchors the page, carries the primary CTA).
   const siteNav = await loadComponent("site-nav", siteNavHost, {
@@ -57,6 +59,9 @@ export async function render(outlet, ctx) {
   const finalCta = await loadComponent("final-cta", finalCtaHost, {
     onDownload: () => downloadVoydnet(),
   });
+  const siteFooter = await loadComponent("site-footer", siteFooterHost, {
+    onGetVoydnet: () => downloadVoydnet(),
+  });
 
   // With every section in the DOM, start the scroll-choreography engine. It
   // drives all [data-reveal] entrances, [data-parallax] drift and the top
@@ -74,6 +79,7 @@ export async function render(outlet, ctx) {
       if (featureSeamless) featureSeamless.destroy();
       if (featureLocal) featureLocal.destroy();
       if (finalCta) finalCta.destroy();
+      if (siteFooter) siteFooter.destroy();
     },
   };
 }

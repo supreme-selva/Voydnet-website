@@ -1,0 +1,248 @@
+/* ==========================================================================
+   PAGE STYLES: faqs  ("Questions? Answers." accordion + help desk)
+   --------------------------------------------------------------------------
+   Sits on top of the shared "legal" surface (see privacy.css) for the outer
+   chrome — background, page padding, the contact list and footer. This file
+   only adds the centered header and the expandable accordion, styled to feel
+   calm and card-like: soft rounded rows, a hairline border, a quiet raised
+   fill, and a +/× glyph that rotates as a panel opens. All token-driven.
+   ========================================================================== */
+
+/* Center the FAQ column and give it a comfortable reading measure. */
+.faq {
+  text-align: left;
+}
+
+/* ==========================================================================
+   HEADER  —  centered, editorial
+   ========================================================================== */
+.faq__head {
+  width: min(100%, 720px);
+  margin: 0 auto var(--space-7);
+  text-align: center;
+}
+
+.faq__title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 6vw, 56px);
+  line-height: 1.05;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-3);
+}
+
+.faq__subtitle {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+/* ==========================================================================
+   ACCORDION LIST
+   ========================================================================== */
+.faq__list {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.faq__item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+
+.faq__item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.faq__item.is-open {
+  border-color: color-mix(in srgb, var(--color-brand) 35%, var(--color-line));
+  box-shadow: var(--shadow-md);
+}
+
+/* Reset the h3 wrapper so the button owns the whole row. */
+.faq__q-wrap {
+  margin: 0;
+  font: inherit;
+}
+
+.faq__q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: clamp(var(--space-4), 2.4vw, var(--space-5)) clamp(var(--space-4), 2.6vw, var(--space-6));
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.7vw, 18px);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  color: var(--color-ink);
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+.faq__q:hover .faq__q-text,
+.faq__q:focus-visible .faq__q-text {
+  color: var(--color-brand);
+}
+
+.faq__q:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+  border-radius: var(--radius-lg);
+}
+
+.faq__q-text {
+  min-width: 0;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+/* ---- +/× icon: two crossing bars; one bar hides on open to make a "×"
+        rotate into a "+" and vice-versa. Simple, crisp, no image. --------- */
+.faq__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface-alt);
+  transition: transform var(--dur-base) var(--ease-spring),
+              background var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--color-ink-soft);
+  transform: translate(-50%, -50%);
+  transition: opacity var(--dur-base) var(--ease-standard),
+              background var(--dur-base) var(--ease-standard);
+}
+
+/* The vertical bar; rotating it makes the "+". */
+.faq__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* Open state: rotate the whole glyph 45° and hide the vertical bar so a
+   clean "×" reads (matching the reference), with a brand-tinted chip. */
+.faq__item.is-open .faq__icon {
+  transform: rotate(45deg);
+  background: color-mix(in srgb, var(--color-brand) 12%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-brand) 35%, var(--color-line));
+}
+
+.faq__item.is-open .faq__icon::before,
+.faq__item.is-open .faq__icon::after {
+  background: var(--color-brand);
+}
+
+/* ---- Answer panel: animated max-height drop-down --------------------- */
+.faq__a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--dur-base) var(--ease-standard);
+}
+
+.faq__a-inner {
+  padding: 0 clamp(var(--space-4), 2.6vw, var(--space-6))
+           clamp(var(--space-4), 2.4vw, var(--space-5));
+}
+
+.faq__a p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+}
+
+.faq__a code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  padding: 0.12em 0.42em;
+  color: var(--color-ink);
+}
+
+/* ==========================================================================
+   HELP DESK / SUPPORT  —  quiet block under the list
+   ========================================================================== */
+.faq__support {
+  width: min(100%, 760px);
+  margin: var(--space-8) auto 0;
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-line);
+}
+
+.faq__support-title {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.6vw, 26px);
+  line-height: 1.25;
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-3);
+  text-align: center;
+}
+
+.faq__support-lede {
+  margin: 0 auto var(--space-4);
+  max-width: 56ch;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+}
+
+/* ---- "Still stuck?" line ---------------------------------------------- */
+.faq__still {
+  width: min(100%, 760px);
+  margin: var(--space-6) auto 0;
+  text-align: center;
+}
+
+.faq__still-note {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 640px) {
+  .faq__q { gap: var(--space-3); }
+  .faq__icon { width: 24px; height: 24px; }
+}
+
+/* Respect reduced-motion: skip the drop-down easing. */
+@media (prefers-reduced-motion: reduce) {
+  .faq__a { transition: none; }
+  .faq__icon { transition: none; }
+}

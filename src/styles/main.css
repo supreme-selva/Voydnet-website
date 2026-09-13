@@ -26,6 +26,7 @@
 @import "../components/feature-seamless/feature-seamless.css";
 @import "../components/feature-local/feature-local.css";
 @import "../components/final-cta/final-cta.css";
+@import "../components/site-footer/site-footer.css";
 @import "../components/thankyou/thankyou.css";
 /* phone-mockup is a family of interchangeable models; import each model. */
 @import "../components/phone-mockup/models/model-1/model-1.css";
@@ -37,6 +38,8 @@
 /* ---- Page-level styles -------------------------------------------------- */
 @import "../pages/showcase/showcase.css";
 @import "../pages/privacy/privacy.css";
+@import "../pages/terms/terms.css";
+@import "../pages/faqs/faqs.css";
 
 /* ---- Utilities MUST be last so they can override when applied ----------- */
 @import "./utilities.css";

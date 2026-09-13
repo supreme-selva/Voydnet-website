@@ -1,0 +1,53 @@
+<!-- ==========================================================================
+     COMPONENT: site-footer  (the closing "bottom sheet")
+     --------------------------------------------------------------------------
+     A calm footer bottom sheet that closes the page. Layout, top → bottom:
+
+       1. Brand lockup — the VoydNet logo left of the "VoydNet" wordmark.
+       2. Nav links    — Features, Pricing, FAQs, Privacy, Terms, Data deletion,
+                         Support (framework-free hash anchors).
+       3. Copyright    — © <year> VoydNet.
+       4. Store link   — "Get VoydNet" with a small store glyph.
+
+     Copy is referenced by key (data-i18n) and filled from the content
+     registry by the controller. The logo src + copyright year are set in JS.
+     ========================================================================== -->
+<footer class="site-footer" data-component="site-footer" data-reveal>
+  <div class="site-footer__sheet">
+
+    <!-- 1) Brand lockup -->
+    <a class="site-footer__brand" href="#/">
+      <img class="site-footer__logo" data-slot="logo" src="" alt="" aria-hidden="true" />
+      <span class="site-footer__brand-text" data-i18n="brand.name">VoydNet</span>
+    </a>
+
+    <!-- 2) Nav links -->
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a class="site-footer__link" href="#/#features" data-i18n="footer.link.features">Features</a>
+      <a class="site-footer__link" href="#/faqs" data-i18n="footer.link.faqs">FAQs</a>
+      <a class="site-footer__link" href="#/Privacy&Policy" data-i18n="footer.link.privacy">Privacy</a>
+      <a class="site-footer__link" href="#/terms" data-i18n="footer.link.terms">Terms</a>
+      <a class="site-footer__link" href="#/licencing" data-i18n="footer.link.licensing">Licensing</a>
+      <a class="site-footer__link" href="#/faqs" data-i18n="footer.link.support">Support</a>
+    </nav>
+
+    <!-- 3) Copyright — the year is filled by the controller. -->
+    <p class="site-footer__copy">
+      © <span data-slot="year">2026</span> <span data-i18n="brand.name">VoydNet</span>
+    </p>
+
+    <!-- 4) Store link -->
+    <div class="site-footer__get">
+      <a class="site-footer__get-link" data-slot="get" href="#">
+        <span class="site-footer__get-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M5 21h14"></path>
+          </svg>
+        </span>
+        <span class="site-footer__get-label" data-i18n="footer.get">Get VoydNet</span>
+      </a>
+    </div>
+
+  </div>
+</footer>

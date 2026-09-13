@@ -14,6 +14,7 @@
 
 import { hydrate, t } from "../../content/strings.js";
 import { createButton } from "../button/button.js";
+import { ASSETS } from "../../config/assets.js";
 
 const ICON_DOWNLOAD = `
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -26,7 +27,11 @@ export function mount(root, props = {}) {
   // 1) Fill copy.
   hydrate(root);
 
-  // 2) Build the CTA button.
+  // 2) Point the centred lead image at the registered asset.
+  const image = root.querySelector('[data-slot="image"]');
+  if (image) image.src = ASSETS.finalCtaImage;
+
+  // 3) Build the CTA button.
   const ctaHost = root.querySelector('[data-slot="cta"]');
   const download = createButton({
     label: t("cta.button", "Download Voydnet"),

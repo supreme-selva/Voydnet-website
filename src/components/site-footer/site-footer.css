@@ -1,0 +1,133 @@
+/* ==========================================================================
+   COMPONENT STYLES: site-footer  (the closing "bottom sheet")
+   --------------------------------------------------------------------------
+   A soft, raised sheet that closes the page. It reads as a distinct panel
+   floating just above the page floor — rounded top corners, a hairline, and
+   a whisper of lift — echoing a mobile "bottom sheet". Contents stack in a
+   natural column that adapts to any width without special-casing.
+
+     .site-footer         — full-bleed band that hosts the sheet.
+     .site-footer__sheet  — the rounded, raised panel (max-width container).
+     .site-footer__brand  — logo + wordmark lockup, top-left.
+     .site-footer__nav    — wrapping row of quiet text links.
+     .site-footer__copy   — © line, muted.
+     .site-footer__get    — store link with a small glyph.
+     .site-footer__wordmark — oversized sign-off along the bottom.
+   ========================================================================== */
+
+.site-footer {
+  width: 100%;
+  background: var(--bg-scene);
+  padding: var(--space-5) 0 0;   /* full-bleed: no side padding, flush to bottom */
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+/* The raised sheet itself — full width, softly distinguished creamy panel. */
+.site-footer__sheet {
+  width: 100%;
+  background: var(--cream-soft);
+  border-top: 1px solid var(--color-line);
+  padding: clamp(28px, 5vw, 56px) var(--section-inset) clamp(24px, 4vw, 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centre every row within the sheet */
+  text-align: center;
+  gap: var(--space-4);
+}
+
+/* ---- 1) Brand lockup ---------------------------------------------------- */
+.site-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+.site-footer__brand:hover { opacity: 0.7; }
+
+/* Logo mark — a rounded app-icon tile sized to the wordmark cap height. */
+.site-footer__logo {
+  display: block;
+  height: 2em;
+  width: 2em;
+  flex-shrink: 0;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+.site-footer__brand-text { display: inline-block; }
+
+/* ---- 2) Nav links ------------------------------------------------------- */
+.site-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;   /* centre the wrapping link row */
+  gap: var(--space-4) var(--space-5);
+  margin-top: var(--space-2);
+}
+
+.site-footer__link {
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+.site-footer__link:hover { color: var(--color-ink); }
+
+/* ---- 3) Copyright ------------------------------------------------------- */
+.site-footer__copy {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ---- 4) Store link ------------------------------------------------------ */
+.site-footer__get { margin-bottom: var(--space-3); }
+
+/* Distinguished creamy-white pill — reads as a quiet raised chip, not a
+   coloured link. Sits on the creamy sheet with a hairline + soft lift. */
+.site-footer__get-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  transition:
+    background var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard);
+}
+.site-footer__get-link:hover {
+  background: #fff;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.site-footer__get-icon {
+  display: inline-flex;
+  width: 1.15em;
+  height: 1.15em;
+  color: var(--color-ink-soft);
+}
+.site-footer__get-icon svg { width: 100%; height: 100%; }
+
+/* Tighten the lockup on small screens. */
+@media (max-width: 600px) {
+  .site-footer__brand { font-size: var(--text-lg); }
+  .site-footer__nav { gap: var(--space-3) var(--space-4); }
+  .site-footer__link { font-size: var(--text-sm); }
+}
